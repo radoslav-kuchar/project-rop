@@ -6,12 +6,8 @@
 <div class="container">
     <div class="row d-flex">
         <div class="col-lg-6 col-md-6 col-sd-12">
-            <img class="w-100 h-auto" onclick="openModal();currentSlide(1)" src="/storage/{{ $service->image }}">
+            <img class="w-100 h-auto" src="/storage/{{ $photo }}">
         </div>
-
-
-
-        
         <div class="col-lg-6 col-md-6 col-sd-12">
             <h1>{{ $service->name }}</h1>
             <a href="/service/user/{{ $service->user->id }}"><strong>{{ $service->user->name }}</strong></a>
@@ -19,10 +15,7 @@
             <h3>{{ $service->price }}</h3>
             <h3>{{ $service->category }}</h3>
             <h3>{{ $service->city }}</h3>
-            <form action="/order/create/{{ $service->id }}">
-              @csrf
-              <input type="submit" class="btn btn-primary">
-            </form>
+            <a href="/order/create/{{ $service->id }}" class="btn btn-primary ml-auto">Objednať</a>
         </div>
     </div>
     @auth
@@ -34,51 +27,7 @@
                 <input type="hidden" name="service_id" value="{{ $service->id }}">
                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                 <div class="txt-center">
-                <style>.txt-center {text-align: center;
-                        }
-                        .hide {
-                            display: none;
-                        }
-
-                        .clear {
-                            float: none;
-                            clear: both;
-                        }
-
-                        .rating {
-                            width: 90px;
-                            unicode-bidi: bidi-override;
-                            direction: rtl;
-                            text-align: center;
-                            position: relative;
-                        }
-
-                        .rating > label {
-                            float: right;
-                            display: inline;
-                            padding: 0;
-                            margin: 0;
-                            position: relative;
-                            width: 1.1em;
-                            cursor: pointer;
-                            color: #FFD700;
-                        }
-
-                        .rating > label:hover,
-                        .rating > label:hover ~ label,
-                        .rating > input.radio-btn:checked ~ label {
-                            color: transparent;
-                        }
-
-                        .rating > label:hover:before,
-                        .rating > label:hover ~ label:before,
-                        .rating > input.radio-btn:checked ~ label:before,
-                        .rating > input.radio-btn:checked ~ label:before {
-                            content: "\2605";
-                            position: absolute;
-                            left: 0;
-                            color: #FFD700;
-                        }</style>
+                <style>.txt-center {text-align: center;}.hide {display: none;}.clear {float: none;clear: both;}.rating {width: 90px; unicode-bidi: bidi-override;direction: rtl;text-align: center;position: relative;}.rating > label {float: right;display: inline; padding: 0; margin: 0; position: relative; width: 1.1em; cursor: pointer; color: #FFD700; } .rating > label:hover, .rating > label:hover ~ label, .rating > input.radio-btn:checked ~ label { color: transparent; } .rating > label:hover:before, .rating > label:hover ~ label:before, .rating > input.radio-btn:checked ~ label:before, .rating > input.radio-btn:checked ~ label:before { content: "\2605"; position: absolute; left: 0; color: #FFD700; }</style>
                         <div class="rating">
                             <input id="star5" name="stars" type="radio" value="5" class="radio-btn hide" required/>
                             <label for="star5">☆</label>

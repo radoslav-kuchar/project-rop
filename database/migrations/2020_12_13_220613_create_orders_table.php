@@ -18,6 +18,9 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('token');
             $table->string('fName');
+            $table->string('lName');
+            $table->string('email');
+            $table->string('phone');
             $table->unsignedBigInteger('service_id');
             $table->timestamps();
 

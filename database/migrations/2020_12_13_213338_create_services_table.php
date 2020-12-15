@@ -17,7 +17,7 @@ class CreateServicesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('name');
-            $table->string('description');
+            $table->longText('description');
             $table->string('category');
             $table->string('city');
             $table->decimal('price', 8, 2);

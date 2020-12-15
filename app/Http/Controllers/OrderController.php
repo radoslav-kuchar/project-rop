@@ -18,7 +18,13 @@ class OrderController extends Controller
         Order::create([
             'service_id' => $request->service_id,
             'fName' => $request->fName,
+            'lName' => $request->lName,
+            'email' => $request->email,
+            'phone' => $request->phone,
             'token' => Str::random(32),
         ]);
+    }
+    public function show(Order $order){
+        return view('order.show', compact('order'));
     }
 }
