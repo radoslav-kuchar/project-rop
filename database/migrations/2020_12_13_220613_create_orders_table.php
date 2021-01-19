@@ -22,9 +22,11 @@ class CreateOrdersTable extends Migration
             $table->string('email');
             $table->string('phone');
             $table->unsignedBigInteger('service_id');
+            $table->boolean('done')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
         });
     }
 

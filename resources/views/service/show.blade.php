@@ -6,7 +6,9 @@
 <div class="container">
     <div class="row d-flex">
         <div class="col-lg-6 col-md-6 col-sd-12">
-            <img class="w-100 h-auto" src="/storage/{{ $photo }}">
+            @foreach($service->getPhotos() as $photo)
+            <img class="w-100 h-auto" src="/storage/{{ $photo ?? '' }}">
+            @endforeach
         </div>
         <div class="col-lg-6 col-md-6 col-sd-12">
             <h1>{{ $service->name }}</h1>
@@ -51,7 +53,7 @@
     <div class="container py-5">
         @foreach($reviews as $review)
             <div class="row py-2 d-flex flex-column border-top border-bottom">
-                <a href="/services/user/{{ $review->user->id }}"><strong class="pr-3">{{ $review->user->name }}</strong><small>{{ $review->created_at }}</small></a>
+                <a href="/service/user/{{ $review->user->id }}"><strong class="pr-3">{{ $review->user->name }}</strong><small>{{ $review->created_at }}</small></a>
                 <p></p>
                 <div>
                     @for($i = 0; $i < $review->stars; $i++)

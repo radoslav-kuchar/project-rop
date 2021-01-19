@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sd-12">
             <form action="/order" method="post" class="d-flex flex-column">
+                <input type="hidden" name="service_id" value="{{ $service->id }}">
                 @csrf
                 <div>
                         <label for="fName" class="col-md-4 col-form-label">Meno</label>

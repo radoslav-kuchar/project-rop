@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Service extends Model
 {
@@ -42,5 +43,12 @@ class Service extends Model
             else if(request('sortBy') == 'Najstaršie') $q->orderBy('created_at', 'ASC');
         }
         return $q;
+    }
+    public function getPhotos(){
+        return DB::table('service_photos')->where('service_id', $this->id)->get()->pluck('path');
+    }
+
+    public function getThumbnail(){
+        return DB::table('service_photos')->where('service_id', $this->id)->where('priority', 1)->pluck('path')->first();
     }
 }

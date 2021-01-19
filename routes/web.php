@@ -32,6 +32,7 @@ Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.updat
 Route::get('/order/create/{service}', 'OrderController@create');
 Route::post('/order', 'OrderController@store');
 Route::get('/order/{order}', 'OrderController@show');
+Route::get('/order/verify/{order}/{token}', 'OrderController@verify');
 
 Route::get('/service/user/{user}', 'ServiceController@indexByUser');
 

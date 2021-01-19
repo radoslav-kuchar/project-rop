@@ -74,7 +74,6 @@ class ServiceController extends Controller
     public function show(Service $service)
     {
         $reviews = Review::where('service_id', $service->id)->orderBy('created_at', 'DESC')->paginate(10);
-        $photo = DB::table('service_photos')->where('service_id', $service->id)->pluck('path')->first();
-        return view('service.show', compact('service','reviews', 'photo'));
+        return view('service.show', compact('service','reviews'));
     }
 }

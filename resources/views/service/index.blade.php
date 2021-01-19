@@ -43,7 +43,7 @@
     <div class="row">
     @foreach($services as $service)
         <div class="col-lg-4 col-md-6 col-sd-12 text-center py-4 d-flex flex-column justify-items-center">
-            <a href="/service/{{ $service->id }}"><img class="w-100 h-auto py-3" src="/storage/{{ $service->image }}"><h1>{{ $service->name }}</h1></a>
+            <a href="/service/{{ $service->id }}"><img class="w-100 h-auto py-3" src="/storage/{{ $service->getThumbnail() ?? '' }}"><h1>{{ $service->name }}</h1></a>
             <a href="/service/user/{{ $service->user_id }}"><h5>Show more from this company</h5></a>
             <p>{{ $service->description }}</p>
             <h3>{{ $service->price }}</h3>

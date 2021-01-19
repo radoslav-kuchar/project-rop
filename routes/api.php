@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/user')->group(function(){
+    Route::post('/login', 'Api\LoginController@login');
+    Route::post('/register', 'Api\RegisterController@create');
+    Route::get('/all', 'UserController@index')->middleware('auth:api');
+});
+
+Route::prefix('/services')->group(function(){
+    Route::get('/all', 'Api\ServiceController@index');
 });
