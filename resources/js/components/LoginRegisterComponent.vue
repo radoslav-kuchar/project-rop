@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-content>
+        <v-main>
             <v-container class="fill-height" fluid>
                 <v-row align="center" justify="center">
                     <v-col cols="12" sm="8" md="8">
@@ -12,7 +12,9 @@
                                             <v-card-text class="mt-12">
                                                 <h1 class="text-center display-2 teal--text text--accent-3">Prihlásenie</h1>                                                
                                                 <h4 class="text-center mlt-4 subtitle-1">Pre prihlásenie zadajte správne údaje</h4>
-                                                <v-form>
+                                                <v-form @submit.prevent="submit" id="check-login-form">
+                                                    <v-alert type="success" v-show="success">Uspesne prihlaseny.</v-alert>
+                                                    <v-alert type="error" v-show="error">Zle prihlasovacie udaje!</v-alert>
                                                     <v-text-field
                                                     label="Email"
                                                     name="Email"
@@ -21,6 +23,7 @@
                                                     color="teal accent-3"
                                                     :rules="[rules.required, rules.email]"
                                                     hide-details="auto"
+                                                    v-model="fields.email"
                                                     ></v-text-field>
                                                     <v-text-field
                                                     id="password"
@@ -31,13 +34,14 @@
                                                     color="teal accent-3"
                                                     :rules="[rules.required]"
                                                     hide-details="auto"
+                                                    v-model="fields.password"
                                                     ></v-text-field>  
                                                 </v-form>
                                                 
                                             </v-card-text>
                                             <h3 class="text-center mt-3 subtitle-1"><a href="#" style="text-decoration:none;color:black;">Zabudli ste heslo?</a></h3>
                                             <div class="text-center mt-3 pb-5">
-                                                <v-btn rounded color="teal accent-3" class="black--text" dark>Prihlásiť sa</v-btn>
+                                                <v-btn type="submit" rounded color="teal accent-3" class="black--text" dark form="check-login-form">Prihlásiť sa</v-btn>
                                             </div>
                                         </v-col>
 
@@ -115,7 +119,7 @@
                                             </v-card-text>
                                             <h3 class="text-center mt-3 subtitle-1"><a href="#" style="text-decoration:none;color:black;">Zabudli ste heslo?</a></h3>
                                             <div class="text-center mt-3 pb-5">
-                                                <v-btn rounded color="teal accent-3" class="black--text" dark>Zaregistrovať sa</v-btn>
+                                                <v-btn rounded color="teal accent-3" class="black--text" dark >Zaregistrovať sa</v-btn>
                                             </div>
                                         </v-col>
                                     </v-row>
@@ -125,7 +129,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </v-content>
+        </v-main>
 
 
     </v-app>
@@ -152,6 +156,13 @@ export default {
 
             
         },
+        fields: {},
+        success: false,
+        error: false,
+
+        
+        
+        
         
     }),
 
@@ -161,7 +172,19 @@ export default {
         }
     },
 
-    
+    methods: {
+        submit() {
+            axios.post('/api/user/login', this.fields).then(response => {
+                this.fields = {};
+                this.success = true;
+                this.error = false;
+            }).catch(error => {
+                this.error = true;
+                this.success = false;
+                console.log('Error');
+            })
+        }
+    },
 
     props: {
         source: String

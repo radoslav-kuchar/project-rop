@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::prefix('/user')->group(function(){
     Route::post('/login', 'Api\LoginController@login');
     Route::post('/register', 'Api\RegisterController@create');
