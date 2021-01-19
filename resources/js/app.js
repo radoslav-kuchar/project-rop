@@ -14,6 +14,9 @@ import 'vuetify/dist/vuetify.min.css'
 
 import '@mdi/font/css/materialdesignicons.css'
 
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
 
 Vue.use(Vuetify)
  
