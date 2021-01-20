@@ -46,3 +46,4 @@ Route::get('/service/{service}', 'ServiceController@show');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get("/test",function(){return view("auth.test");});
+Route::get("/testhome",function(){return view("service.test-home");});
