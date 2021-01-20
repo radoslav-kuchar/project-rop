@@ -69,7 +69,7 @@
         data: () => ({
             drawer: false,
             group: null,
-            loggedOut: true,
+            loggedOut: false,
             loggedIn: false,
         }),
 
@@ -78,6 +78,9 @@
                 this.drawer = false
             },
         },
+
+
+
     };
 </script>
 

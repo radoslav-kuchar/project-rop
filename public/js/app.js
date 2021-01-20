@@ -1915,7 +1915,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       drawer: false,
       group: null,
-      loggedOut: true,
+      loggedOut: false,
       loggedIn: false
     };
   },
@@ -2591,13 +2591,22 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
-      axios.post('/api/user/login', this.fields).then(function (response) {
-        _this2.success = true;
-        _this2.error = false;
+      axios.post('/api/user/login', {
+        email: this.fields.email,
+        password: this.fields.password
+      }).then(function (response) {
+        if (response.data.message === undefined) {
+          console.log("som kral sveta");
+          window.location.href = '/testhome';
+        } else {
+          console.log("neeevieees jooj");
+          _this2.error = true;
+          _this2.success = false;
+        }
+
+        console.log(response);
       })["catch"](function (error) {
-        _this2.error = true;
-        _this2.success = false;
-        console.log('Error');
+        console.log(error);
       });
     }
   },

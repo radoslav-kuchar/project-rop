@@ -158,11 +158,7 @@ export default {
         },
         fields: {},
         success: false,
-        error: false,
-
-        
-        
-        
+        error: false,    
         
     }),
 
@@ -174,13 +170,24 @@ export default {
 
     methods: {
         submit() {
-            axios.post('/api/user/login', this.fields).then(response => {
-                this.success = true;
-                this.error = false;
-            }).catch(error => {
-                this.error = true;
-                this.success = false;
-                console.log('Error');
+            axios.post('/api/user/login', {
+                email: this.fields.email,
+                password: this.fields.password
+            })
+            .then(response => {
+                if(response.data.message === undefined){
+                    console.log("som kral sveta");    
+                    window.location.href = '/testhome';      
+                }else{
+                    console.log("neeevieees jooj");
+                    this.error = true;
+                    this.success = false;
+                }
+                console.log(response);
+                
+            })
+            .catch(function (error) {
+                console.log(error);
             })
         }
     },

@@ -22,5 +22,6 @@ Route::prefix('/user')->group(function(){
 });
 
 Route::prefix('/services')->group(function(){
-    Route::get('/all', 'Api\ServiceController@index');
+    Route::get('/all', 'Api\ServiceController@index')->middleware('auth:api');
+    
 });
