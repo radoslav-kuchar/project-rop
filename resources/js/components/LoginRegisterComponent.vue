@@ -13,8 +13,6 @@
                                                 <h1 class="text-center display-2 orange--text text--lighten-1">Prihlásenie</h1>                                            
                                                 <h4 class="text-center mlt-4 subtitle-1">Pre prihlásenie zadajte správne údaje</h4>
                                                 <v-form @submit.prevent="submit" id="check-login-form">
-                                                    <v-alert type="success" v-show="success">Uspesne prihlaseny.</v-alert>
-                                                    <v-alert type="error" v-show="error">Zle prihlasovacie udaje!</v-alert>
                                                     <v-text-field
                                                     label="Email"
                                                     name="Email"
@@ -22,8 +20,9 @@
                                                     type="text"
                                                     color="orange lighten-1"
                                                     :rules="[rules.required, rules.email]"
+                                                    :error-messages="errorsl.email"
                                                     hide-details="auto"
-                                                    v-model="fields.email"
+                                                    v-model="fieldsl.email"
                                                     ></v-text-field>
                                                     <v-text-field
                                                     id="password"
@@ -33,15 +32,16 @@
                                                     type="password"
                                                     color="orange lighten-1"
                                                     :rules="[rules.required]"
+                                                    :error-messages="errorsl.password"
                                                     hide-details="auto"
-                                                    v-model="fields.password"
+                                                    v-model="fieldsl.password"
                                                     ></v-text-field>  
                                                 </v-form>
                                                 
                                             </v-card-text>
                                             <h3 class="text-center mt-3 subtitle-1"><a href="#" style="text-decoration:none;color:black;">Zabudli ste heslo?</a></h3>
-                                            <div class="text-center mt-3 pb-5">
-                                                <v-btn type="submit" rounded color="orange lighten-1" class="black--text" dark form="check-login-form">Prihlásiť sa</v-btn>
+                                            <div class="text-center mt-3 pb-5">                                                
+                                                <v-btn type="submit" rounded color="orange lighten-1" class="black--text" dark form="check-login-form" @click="doLogin">Prihlásiť sa</v-btn>
                                             </div>
                                         </v-col>
 
@@ -70,9 +70,11 @@
                                         </v-col>
                                         <v-col cols="12" md="8">
                                             <v-card-text class="mt-12">
+                                                
                                                 <h1 class="text-center display-2 orange--text text--lighten-1">Registrácia</h1>
                                                 <h4 class="text-center mlt-4 subtitle-1">Pre registráciu vyplňte osobné údaje</h4>
-                                                <v-form >
+                                                <v-alert type="success" v-show="success_register" timeout="-1">Vaša registrácia prebehla úspešne!</v-alert>
+                                                <v-form ref="form">
                                                     <v-text-field
                                                     label="Meno užívateľa"
                                                     name="Name"
@@ -80,7 +82,9 @@
                                                     type="text"
                                                     color="orange lighten-1"
                                                     :rules="[rules.required, rules.length]"
+                                                    :error-messages="errorsr.name"
                                                     hide-details="auto"
+                                                    v-model="fieldsr.name"
                                                     ></v-text-field>
                                                     <v-text-field
                                                     label="Email"
@@ -89,37 +93,41 @@
                                                     type="text"
                                                     color="orange lighten-1"
                                                     :rules="[rules.required, rules.email]"
+                                                    :error-messages="errorsr.email"
                                                     hide-details="auto"
+                                                    v-model="fieldsr.email"
                                                     ></v-text-field>
                                                     <v-text-field
-                                                    v-model="password"
                                                     label="Heslo"
                                                     name="Password"
                                                     prepend-icon="mdi-lock"
                                                     :type="show1 ? 'text' : 'password'"
                                                     color="orange lighten-1"
                                                     :rules="[rules.required, rules.lengthPassword]"
+                                                    :error-messages="errorsr.password"
                                                     hide-details="auto"
                                                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                                    @click:append="show1 = !show1"
+                                                    @click:append="show1 = !show1"                                                    
+                                                    v-model="fieldsr.password"
                                                     ></v-text-field>  
                                                     <v-text-field
-                                                    v-model="rePassword"
                                                     label="Zopakuj heslo"
                                                     name="Re-Password"
                                                     prepend-icon="mdi-lock"
                                                     :type="show2 ? 'text' : 'password'"
                                                     color="orange lighten-1"
                                                     :rules="[passwordConfirmationRule]"
+                                                    :error-messages="errorsr.rePassword"
                                                     hide-details="auto"
                                                     :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                                                    @click:append="show2 = !show2"
+                                                    @click:append="show2 = !show2"                                                    
+                                                    v-model="fieldsr.rePassword"
                                                     ></v-text-field>  
                                                 </v-form>
                                             </v-card-text>
                                             <h3 class="text-center mt-3 subtitle-1"><a href="#" style="text-decoration:none;color:black;">Zabudli ste heslo?</a></h3>
                                             <div class="text-center mt-3 pb-5">
-                                                <v-btn rounded color="orange lighten-1" class="black--text" dark >Zaregistrovať sa</v-btn>
+                                                <v-btn rounded color="orange lighten-1" class="black--text" dark @click="doRegister">Zaregistrovať sa</v-btn>
                                             </div>
                                         </v-col>
                                     </v-row>
@@ -156,39 +164,48 @@ export default {
 
             
         },
-        fields: {},
+        fieldsr: {},
+        fieldsl: { 
+            email: '',
+            password: '',
+            device_name: 'browser'
+        },
         success: false,
         error: false,    
+        success_register: false,
+        errorsl: {},
+        errorsr: {},
+
         
     }),
 
     computed: {
         passwordConfirmationRule() {
-            return () => (this.password === this.rePassword) || 'Heslá sa nerovnajú.'
+            return () => (this.fieldsr.password === this.fieldsr.rePassword) || 'Heslá sa nerovnajú.'
         }
     },
 
     methods: {
-        submit() {
-            axios.post('/api/user/login', {
-                email: this.fields.email,
-                password: this.fields.password
-            })
-            .then(response => {
-                if(response.data.message === undefined){
-                    console.log("som kral sveta");    
-                    window.location.href = '/testhome';      
-                }else{
-                    console.log("neeevieees jooj");
-                    this.error = true;
-                    this.success = false;
-                }
-                console.log(response);
-                
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+        doLogin() {
+            axios.post("api/login", this.fieldsl).then( response => {
+                console.log(response.data)
+                localStorage.setItem('token', response.data.accessToken)
+                this.$router.push('/testhome')
+            }).catch( errors => {
+                this.errorsl = errors.response.data.errors
+                this.success = false
+            }) 
+        },
+        doRegister() {
+            axios.post("api/register", this.fieldsr).then( response => {
+                console.log(response.data)
+                this.success_register = true
+                this.$refs.form.reset()
+                this.$refs.form.resetValidation()
+            }).catch( errors => {
+                this.errorsr = errors.response.data.errors
+                this.success_register = false
+            }) 
         }
     },
 

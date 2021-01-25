@@ -1916,13 +1916,42 @@ __webpack_require__.r(__webpack_exports__);
       drawer: false,
       group: null,
       loggedOut: false,
-      loggedIn: false
+      loggedIn: false,
+      currentUser: {},
+      token: localStorage.getItem('token')
     };
   },
   watch: {
     group: function group() {
       this.drawer = false;
     }
+  },
+  methods: {
+    getUser: function getUser() {
+      var _this = this;
+
+      axios.get('/api/user').then(function (response) {
+        _this.currentUser = response.data;
+        console.log(_this.currentUser);
+      })["catch"](function (errors) {
+        return console.log(errors);
+      });
+    },
+    logout: function logout() {
+      var _this2 = this;
+
+      axios.post("/api/logout").then(function (response) {
+        localStorage.removeItem('token');
+
+        _this2.$router.push('/login');
+      })["catch"](function (errors) {
+        console.log(errors.response.data);
+      });
+    }
+  },
+  created: function created() {
+    axios.defaults.headers.common["Authorization"] = "Bearer ".concat(this.token);
+    this.getUser();
   }
 });
 
@@ -2552,6 +2581,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2573,9 +2610,17 @@ __webpack_require__.r(__webpack_exports__);
           return value && value.length >= 8 || 'Minimálny počet znakov je 8';
         }
       },
-      fields: {},
+      fieldsr: {},
+      fieldsl: {
+        email: '',
+        password: '',
+        device_name: 'browser'
+      },
       success: false,
-      error: false
+      error: false,
+      success_register: false,
+      errorsl: {},
+      errorsr: {}
     };
   },
   computed: {
@@ -2583,30 +2628,37 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       return function () {
-        return _this.password === _this.rePassword || 'Heslá sa nerovnajú.';
+        return _this.fieldsr.password === _this.fieldsr.rePassword || 'Heslá sa nerovnajú.';
       };
     }
   },
   methods: {
-    submit: function submit() {
+    doLogin: function doLogin() {
       var _this2 = this;
 
-      axios.post('/api/user/login', {
-        email: this.fields.email,
-        password: this.fields.password
-      }).then(function (response) {
-        if (response.data.message === undefined) {
-          console.log("som kral sveta");
-          window.location.href = '/testhome';
-        } else {
-          console.log("neeevieees jooj");
-          _this2.error = true;
-          _this2.success = false;
-        }
+      axios.post("api/login", this.fieldsl).then(function (response) {
+        console.log(response.data);
+        localStorage.setItem('token', response.data.accessToken);
 
-        console.log(response);
-      })["catch"](function (error) {
-        console.log(error);
+        _this2.$router.push('/testhome');
+      })["catch"](function (errors) {
+        _this2.errorsl = errors.response.data.errors;
+        _this2.success = false;
+      });
+    },
+    doRegister: function doRegister() {
+      var _this3 = this;
+
+      axios.post("api/register", this.fieldsr).then(function (response) {
+        console.log(response.data);
+        _this3.success_register = true;
+
+        _this3.$refs.form.reset();
+
+        _this3.$refs.form.resetValidation();
+      })["catch"](function (errors) {
+        _this3.errorsr = errors.response.data.errors;
+        _this3.success_register = false;
       });
     }
   },
@@ -2628,12 +2680,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _router_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./router/router */ "./resources/js/router/router.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
 /* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
-/* harmony import */ var _mdi_font_css_materialdesignicons_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mdi/font/css/materialdesignicons.css */ "./node_modules/@mdi/font/css/materialdesignicons.css");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
+/* harmony import */ var _mdi_font_css_materialdesignicons_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mdi/font/css/materialdesignicons.css */ "./node_modules/@mdi/font/css/materialdesignicons.css");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -2647,8 +2699,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_3__.default);
-vue__WEBPACK_IMPORTED_MODULE_2__.default.use((vuetify__WEBPACK_IMPORTED_MODULE_4___default()));
+vue__WEBPACK_IMPORTED_MODULE_3__.default.use((vuetify__WEBPACK_IMPORTED_MODULE_4___default()));
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -2659,18 +2710,19 @@ vue__WEBPACK_IMPORTED_MODULE_2__.default.use((vuetify__WEBPACK_IMPORTED_MODULE_4
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-vue__WEBPACK_IMPORTED_MODULE_2__.default.component('login-register', __webpack_require__(/*! ./components/LoginRegisterComponent.vue */ "./resources/js/components/LoginRegisterComponent.vue").default);
-vue__WEBPACK_IMPORTED_MODULE_2__.default.component('header-component', __webpack_require__(/*! ./components/HeaderComponent.vue */ "./resources/js/components/HeaderComponent.vue").default);
-vue__WEBPACK_IMPORTED_MODULE_2__.default.component('home', __webpack_require__(/*! ./components/HomeComponent.vue */ "./resources/js/components/HomeComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('login-register', __webpack_require__(/*! ./components/LoginRegisterComponent.vue */ "./resources/js/components/LoginRegisterComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('header-component', __webpack_require__(/*! ./components/HeaderComponent.vue */ "./resources/js/components/HeaderComponent.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_3__.default.component('home', __webpack_require__(/*! ./components/HomeComponent.vue */ "./resources/js/components/HomeComponent.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new vue__WEBPACK_IMPORTED_MODULE_2__.default({
+var app = new vue__WEBPACK_IMPORTED_MODULE_3__.default({
   el: '#app',
-  vuetify: new (vuetify__WEBPACK_IMPORTED_MODULE_4___default())()
+  vuetify: new (vuetify__WEBPACK_IMPORTED_MODULE_4___default())(),
+  router: _router_router__WEBPACK_IMPORTED_MODULE_0__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new (vuetify__WEBPACK_IMPORTED_MODULE_4___default())({
   icons: {
@@ -2721,6 +2773,81 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/router/router.js":
+/*!***************************************!*\
+  !*** ./resources/js/router/router.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _components_HomeComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../components/HomeComponent.vue */ "./resources/js/components/HomeComponent.vue");
+/* harmony import */ var _components_LoginRegisterComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../components/LoginRegisterComponent.vue */ "./resources/js/components/LoginRegisterComponent.vue");
+
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_2__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_3__.default);
+var routes = [{
+  path: "/testhome",
+  name: "Home",
+  component: _components_HomeComponent_vue__WEBPACK_IMPORTED_MODULE_0__.default,
+  meta: {
+    requiresAuth: true
+  }
+}, {
+  path: "/test",
+  name: "Login",
+  component: _components_LoginRegisterComponent_vue__WEBPACK_IMPORTED_MODULE_1__.default,
+  meta: {
+    guest: true
+  }
+}];
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__.default({
+  mode: "history",
+  routes: routes
+});
+
+function loggedIn() {
+  return localStorage.getItem("token");
+}
+
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  })) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!loggedIn()) {
+      router.push({
+        path: '/test'
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some(function (record) {
+    return record.meta.guest;
+  })) {
+    if (loggedIn()) {
+      router.push({
+        path: '/testhome'
+      });
+    } else {
+      next();
+    }
+  } else {
+    next(); // make sure to always call next()!
+  }
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),
 
@@ -38733,6 +38860,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list-item",
+                { attrs: { link: "" }, on: { click: _vm.logout } },
                 [
                   _c(
                     "v-list-item-action",
@@ -38757,16 +38885,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-app-bar",
-        {
-          attrs: { color: "orange lighten-1", app: "", dark: "" },
-          model: {
-            value: _vm.step,
-            callback: function($$v) {
-              _vm.step = $$v
-            },
-            expression: "step"
-          }
-        },
+        { attrs: { color: "orange lighten-1", app: "", dark: "" } },
         [
           _c("v-app-bar-nav-icon", {
             on: {
@@ -38833,11 +38952,11 @@ var render = function() {
                 [
                   _c("div", { staticClass: "flex-column" }, [
                     _c("div", { staticClass: "body-1" }, [
-                      _vm._v("Patrik Krajňák")
+                      _vm._v(_vm._s(_vm.currentUser.name))
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "body-2 font-weight-light" }, [
-                      _vm._v("Nový používateľ")
+                      _vm._v("Prihlásený")
                     ])
                   ])
                 ]
@@ -39813,46 +39932,6 @@ var render = function() {
                                                   }
                                                 },
                                                 [
-                                                  _c(
-                                                    "v-alert",
-                                                    {
-                                                      directives: [
-                                                        {
-                                                          name: "show",
-                                                          rawName: "v-show",
-                                                          value: _vm.success,
-                                                          expression: "success"
-                                                        }
-                                                      ],
-                                                      attrs: { type: "success" }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "Uspesne prihlaseny."
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-alert",
-                                                    {
-                                                      directives: [
-                                                        {
-                                                          name: "show",
-                                                          rawName: "v-show",
-                                                          value: _vm.error,
-                                                          expression: "error"
-                                                        }
-                                                      ],
-                                                      attrs: { type: "error" }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "Zle prihlasovacie udaje!"
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
                                                   _c("v-text-field", {
                                                     attrs: {
                                                       label: "Email",
@@ -39865,18 +39944,21 @@ var render = function() {
                                                         _vm.rules.required,
                                                         _vm.rules.email
                                                       ],
+                                                      "error-messages":
+                                                        _vm.errorsl.email,
                                                       "hide-details": "auto"
                                                     },
                                                     model: {
-                                                      value: _vm.fields.email,
+                                                      value: _vm.fieldsl.email,
                                                       callback: function($$v) {
                                                         _vm.$set(
-                                                          _vm.fields,
+                                                          _vm.fieldsl,
                                                           "email",
                                                           $$v
                                                         )
                                                       },
-                                                      expression: "fields.email"
+                                                      expression:
+                                                        "fieldsl.email"
                                                     }
                                                   }),
                                                   _vm._v(" "),
@@ -39892,20 +39974,22 @@ var render = function() {
                                                       rules: [
                                                         _vm.rules.required
                                                       ],
+                                                      "error-messages":
+                                                        _vm.errorsl.password,
                                                       "hide-details": "auto"
                                                     },
                                                     model: {
                                                       value:
-                                                        _vm.fields.password,
+                                                        _vm.fieldsl.password,
                                                       callback: function($$v) {
                                                         _vm.$set(
-                                                          _vm.fields,
+                                                          _vm.fieldsl,
                                                           "password",
                                                           $$v
                                                         )
                                                       },
                                                       expression:
-                                                        "fields.password"
+                                                        "fieldsl.password"
                                                     }
                                                   })
                                                 ],
@@ -39953,7 +40037,8 @@ var render = function() {
                                                     color: "orange lighten-1",
                                                     dark: "",
                                                     form: "check-login-form"
-                                                  }
+                                                  },
+                                                  on: { click: _vm.doLogin }
                                                 },
                                                 [_vm._v("Prihlásiť sa")]
                                               )
@@ -40139,7 +40224,33 @@ var render = function() {
                                               ),
                                               _vm._v(" "),
                                               _c(
+                                                "v-alert",
+                                                {
+                                                  directives: [
+                                                    {
+                                                      name: "show",
+                                                      rawName: "v-show",
+                                                      value:
+                                                        _vm.success_register,
+                                                      expression:
+                                                        "success_register"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "success",
+                                                    timeout: "-1"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "Vaša registrácia prebehla úspešne!"
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
                                                 "v-form",
+                                                { ref: "form" },
                                                 [
                                                   _c("v-text-field", {
                                                     attrs: {
@@ -40153,7 +40264,20 @@ var render = function() {
                                                         _vm.rules.required,
                                                         _vm.rules.length
                                                       ],
+                                                      "error-messages":
+                                                        _vm.errorsr.name,
                                                       "hide-details": "auto"
+                                                    },
+                                                    model: {
+                                                      value: _vm.fieldsr.name,
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          _vm.fieldsr,
+                                                          "name",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression: "fieldsr.name"
                                                     }
                                                   }),
                                                   _vm._v(" "),
@@ -40169,7 +40293,21 @@ var render = function() {
                                                         _vm.rules.required,
                                                         _vm.rules.email
                                                       ],
+                                                      "error-messages":
+                                                        _vm.errorsr.email,
                                                       "hide-details": "auto"
+                                                    },
+                                                    model: {
+                                                      value: _vm.fieldsr.email,
+                                                      callback: function($$v) {
+                                                        _vm.$set(
+                                                          _vm.fieldsr,
+                                                          "email",
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "fieldsr.email"
                                                     }
                                                   }),
                                                   _vm._v(" "),
@@ -40187,6 +40325,8 @@ var render = function() {
                                                         _vm.rules.required,
                                                         _vm.rules.lengthPassword
                                                       ],
+                                                      "error-messages":
+                                                        _vm.errorsr.password,
                                                       "hide-details": "auto",
                                                       "append-icon": _vm.show1
                                                         ? "mdi-eye"
@@ -40200,11 +40340,17 @@ var render = function() {
                                                       }
                                                     },
                                                     model: {
-                                                      value: _vm.password,
+                                                      value:
+                                                        _vm.fieldsr.password,
                                                       callback: function($$v) {
-                                                        _vm.password = $$v
+                                                        _vm.$set(
+                                                          _vm.fieldsr,
+                                                          "password",
+                                                          $$v
+                                                        )
                                                       },
-                                                      expression: "password"
+                                                      expression:
+                                                        "fieldsr.password"
                                                     }
                                                   }),
                                                   _vm._v(" "),
@@ -40221,6 +40367,8 @@ var render = function() {
                                                       rules: [
                                                         _vm.passwordConfirmationRule
                                                       ],
+                                                      "error-messages":
+                                                        _vm.errorsr.rePassword,
                                                       "hide-details": "auto",
                                                       "append-icon": _vm.show2
                                                         ? "mdi-eye"
@@ -40234,11 +40382,17 @@ var render = function() {
                                                       }
                                                     },
                                                     model: {
-                                                      value: _vm.rePassword,
+                                                      value:
+                                                        _vm.fieldsr.rePassword,
                                                       callback: function($$v) {
-                                                        _vm.rePassword = $$v
+                                                        _vm.$set(
+                                                          _vm.fieldsr,
+                                                          "rePassword",
+                                                          $$v
+                                                        )
                                                       },
-                                                      expression: "rePassword"
+                                                      expression:
+                                                        "fieldsr.rePassword"
                                                     }
                                                   })
                                                 ],
@@ -40284,7 +40438,8 @@ var render = function() {
                                                     rounded: "",
                                                     color: "orange lighten-1",
                                                     dark: ""
-                                                  }
+                                                  },
+                                                  on: { click: _vm.doRegister }
                                                 },
                                                 [_vm._v("Zaregistrovať sa")]
                                               )

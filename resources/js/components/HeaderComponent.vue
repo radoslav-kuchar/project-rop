@@ -20,7 +20,7 @@
                     </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item>
+                <v-list-item link @click="logout">
                     <v-list-item-action>
                         <v-icon>mdi-logout</v-icon>
                     </v-list-item-action>
@@ -33,7 +33,7 @@
         </v-navigation-drawer>
 
 
-        <v-app-bar color="orange lighten-1" app v-model="step" dark>
+        <v-app-bar color="orange lighten-1" app dark>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         
 
@@ -50,8 +50,8 @@
                 </v-avatar>
                 <div class="d-none d-sm-flex flex-row align-center mx-2">
                     <div class="flex-column">
-                        <div class="body-1">Patrik Krajňák</div>
-                        <div class="body-2 font-weight-light">Nový používateľ</div>
+                        <div class="body-1">{{ currentUser.name }}</div>
+                        <div class="body-2 font-weight-light">Prihlásený</div>
                     </div>
                 </div>
             </div>
@@ -71,6 +71,8 @@
             group: null,
             loggedOut: false,
             loggedIn: false,
+            currentUser: {},
+            token: localStorage.getItem('token'),
         }),
 
         watch: {
@@ -79,8 +81,29 @@
             },
         },
 
+        methods: {
+            getUser() {
+                axios.get('/api/user').then(response => {
+                this.currentUser = response.data
+                console.log(this.currentUser)
+            }).catch(errors =>
+                console.log(errors)
+            )
+            },
 
+            logout() {
+                axios.post("/api/logout").then(response =>{
+                    localStorage.removeItem('token');
+                    this.$router.push('/login')
+                }).catch(errors => {
+                    console.log(errors.response.data);
+                })
+            }
+        },
 
+        created() {
+            axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
+            this.getUser()
+        },
     };
 </script>
-

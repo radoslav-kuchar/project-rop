@@ -8,15 +8,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import router from './router/router'
+
 import Vue from 'vue';
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
 import '@mdi/font/css/materialdesignicons.css'
 
-import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
 
 Vue.use(Vuetify)
  
@@ -44,6 +44,7 @@ Vue.component('home', require('./components/HomeComponent.vue').default);
 const app = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
+    router
 });
 
 export default new Vuetify({

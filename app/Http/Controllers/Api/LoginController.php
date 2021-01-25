@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Laravel\Passport\HasApiTokens;
 
 class LoginController extends Controller
 {
@@ -22,5 +23,11 @@ class LoginController extends Controller
         $accessToken = Auth::user()->createToken('authToken')->accessToken;
 
         return response(['user' => Auth::user(), 'accessToken' => $accessToken]);
+    }
+
+    public function logout(Request $request){
+
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['msg' => 'Logout successsssss']);
     }
 }
