@@ -34,6 +34,7 @@ Vue.use(Vuetify)
 Vue.component('login-register', require('./components/LoginRegisterComponent.vue').default);
 Vue.component('header-component', require('./components/HeaderComponent.vue').default);
 Vue.component('home', require('./components/HomeComponent.vue').default);
+Vue.component('create_service', require('./components/CreateServiceComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

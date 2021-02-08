@@ -7,16 +7,16 @@
                         <v-icon>mdi-home</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Home</v-list-item-title>
+                        <v-list-item-title>Domov</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item>
+                <v-list-item link @click="service">
                     <v-list-item-action>
-                        <v-icon>mdi-help-circle</v-icon>
+                        <v-icon>mdi-archive-arrow-up-outline</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>About</v-list-item-title>
+                        <v-list-item-title>Vytvoriť službu</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -25,7 +25,7 @@
                         <v-icon>mdi-logout</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Sign Out</v-list-item-title>
+                        <v-list-item-title>Odhlásiť sa</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -37,16 +37,15 @@
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         
 
-            <v-toolbar-title class="font-weight-medium" >Sprostredkovanie služieb</v-toolbar-title>
+            <v-toolbar-title class="font-weight-medium">Sprostredkovanie služieb</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items v-show="loggedOut">
-                <v-btn text>Login</v-btn>
-                <v-btn text>Register</v-btn>
-            </v-toolbar-items>
+            
 
-            <div class="d-flex" v-show="loggedIn">
-                <v-avatar>
-                <img :src="'https://stevensegallery.com/100/100/?rand=' + Math.random()" />
+            <div class="d-flex" >
+                <v-avatar color="orange">
+                    <v-icon dark>
+                        mdi-account-circle
+                    </v-icon>
                 </v-avatar>
                 <div class="d-none d-sm-flex flex-row align-center mx-2">
                     <div class="flex-column">
@@ -72,7 +71,7 @@
             loggedOut: false,
             loggedIn: false,
             currentUser: {},
-            token: localStorage.getItem('token'),
+            token: localStorage.getItem('accessToken'),
         }),
 
         watch: {
@@ -83,21 +82,25 @@
 
         methods: {
             getUser() {
-                axios.get('/api/user').then(response => {
-                this.currentUser = response.data
-                console.log(this.currentUser)
-            }).catch(errors =>
-                console.log(errors)
-            )
+                axios.get('/userinfo').then(response => {
+                    this.currentUser = response.data
+                }).catch(errors =>
+                    console.log(errors)
+                )
             },
 
             logout() {
-                axios.post("/api/logout").then(response =>{
+                axios.post("/logout").then(response =>{
                     localStorage.removeItem('token');
-                    this.$router.push('/login')
+                    location.href = '/test';
                 }).catch(errors => {
                     console.log(errors.response.data);
                 })
+            },
+
+            service() {
+                location.href = '/testservice';
+                
             }
         },
 

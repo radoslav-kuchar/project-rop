@@ -1,41 +1,34 @@
 <template>
 <v-app>
-   <v-row>
-    <v-col cols="3">
-        <v-card
-            max-width="400"
+   
+   
+    <v-row>
+    <v-col cols="12" lg="3" md="12">
+        
+        <v-expansion-panels
+        v-model="panel"
+        v-show="$vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs"
         >
+        <v-expansion-panel >
+            <v-expansion-panel-header>Filter služieb</v-expansion-panel-header>
+            <v-expansion-panel-content>
+                
         <v-card-text>
-            <h2 class="title mb-2">
-                Vyberte kategóriu
-            </h2>
-
             <h5 class="my-2">
                 Administratívne služby
             </h5>
 
             <v-chip-group
-                v-model="amenities"
                 column
                 multiple
             >
                 <v-chip
                 filter
                 outlined
+                v-for="admin in admins"
+                :key="admin"
                 >
-                Archivácia a ochrana dát
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Spracovanie dát
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Správa registratúry a dokumentov
+                {{ admin }}
                 </v-chip>
             </v-chip-group>
 
@@ -43,63 +36,16 @@
                     Krása a relax
                 </h5>
             <v-chip-group
-                v-model="amenities"
                 column
                 multiple
             >
                 <v-chip
                 filter
                 outlined
+                v-for="relax in relaxes"
+                :key="relax"
                 >
-                Kaderníctvo/Barber
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Kozmetický salón
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Masáže
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Nechtové štúdium
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Sauna
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Solárium
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Tetovanie a piercing
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Vizážista
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Wellness
+                {{ relax }}
                 </v-chip>                
             </v-chip-group>
             </v-card-text>
@@ -110,45 +56,16 @@
             </h2>
 
             <v-chip-group
-                v-model="neighborhoods"
                 column
                 multiple
             >
                 <v-chip
                 filter
                 outlined
+                v-for="city in cities"
+                :key="city"
                 >
-                Bratislava
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Košice
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Prešov
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Poprad
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Nitra
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Žilina
+                {{ city }}
                 </v-chip>
             </v-chip-group>
             </v-card-text>
@@ -159,281 +76,187 @@
             </h2>
 
             <v-chip-group
-                v-model="neighborhoods"
+                column
+            >
+                <v-chip
+                filter
+                outlined
+                v-for="sort in sorts"
+                :key="sort"
+                >
+                {{ sort }}
+                </v-chip>
+                
+            </v-chip-group>
+            </v-card-text>
+        
+            </v-expansion-panel-content>
+        </v-expansion-panel>
+        </v-expansion-panels>
+
+        <v-card v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">
+        <v-card-text>
+            <h5 class="my-2">
+                Administratívne služby
+            </h5>
+
+            <v-chip-group
                 column
                 multiple
             >
                 <v-chip
                 filter
                 outlined
+                v-for="admin in admins"
+                :key="admin"
                 >
-                Najlacnejšie
+                {{ admin }}
                 </v-chip>
+                
+            </v-chip-group>
+
+                <h5 class="my-2">
+                    Krása a relax
+                </h5>
+            <v-chip-group
+                column
+                multiple
+            >
                 <v-chip
                 filter
                 outlined
+                v-for="relax in relaxes"
+                :key="relax"
                 >
-                Najdrahšie
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Najnovšie
-                </v-chip>
-                <v-chip
-                filter
-                outlined
-                >
-                Najstaršie
-                </v-chip>
+                {{ relax }}
+                </v-chip>               
             </v-chip-group>
             </v-card-text>
-        </v-card>
-    </v-col>
-
-    <v-col cols="9" class="mt-5">
-        <v-row>
-        <v-col cols="4">
-            <v-card
-            :loading="loading"
-            class="mx-auto my-12"
-            max-width="374"
-        >
-            <template slot="progress">
-            <v-progress-linear
-                color="orange lighten-1"
-                height="10"
-                indeterminate
-            ></v-progress-linear>
-            </template>
-
-            <v-img
-            height="250"
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            ></v-img>
-
-            <v-card-title>Cafe Badilico</v-card-title>
 
             <v-card-text>
-            <v-row
-                align="center"
-                class="mx-0"
+            <h2 class="title my-2">
+                Vyberte mesto
+            </h2>
+
+            <v-chip-group
+                column
+                multiple
             >
-                <v-rating
-                :value="4.5"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="14"
-                ></v-rating>
-
-                <div class="grey--text ml-4">
-                4.5 (413)
-                </div>
-            </v-row>
-
-            <div class="my-4 subtitle-1">
-                $ • Italian, Cafe
-            </div>
-
-            <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
+                <v-chip
+                filter
+                outlined
+                v-for="city in cities"
+                :key="city"
+                >
+                {{ city }}
+                </v-chip>
+                
+            </v-chip-group>
             </v-card-text>
 
-            <v-divider class="mx-4"></v-divider>
-
-            <v-card-title>Tonight's availability</v-card-title>
-
             <v-card-text>
+            <h2 class="title my-2">
+                Zoradiť podľa
+            </h2>
+
             <v-chip-group
-                v-model="selection"
-                active-class="orange lighten-1 white--text"
                 column
             >
-                <v-chip>5:30PM</v-chip>
-
-                <v-chip>7:30PM</v-chip>
-
-                <v-chip>8:00PM</v-chip>
-
-                <v-chip>9:00PM</v-chip>
+                <v-chip
+                filter
+                outlined
+                v-for="sort in sorts"
+                :key="sort"
+                >
+                {{ sort }}
+                </v-chip>
             </v-chip-group>
             </v-card-text>
-
-            <v-card-actions>
-            <v-btn
-                color="orange lighten-1"
-                text
-                @click="reserve"
-            >
-                Viac o službe
-            </v-btn>
-            </v-card-actions>
         </v-card>
-        </v-col>
-
-        <v-col cols="4">
-            <v-card
-            :loading="loading"
-            class="mx-auto my-12"
-            max-width="374"
-        >
-            <template slot="progress">
-            <v-progress-linear
-                color="orange lighten-1"
-                height="10"
-                indeterminate
-            ></v-progress-linear>
-            </template>
-
-            <v-img
-            height="250"
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            ></v-img>
-
-            <v-card-title>Cafe Badilico</v-card-title>
-
-            <v-card-text>
-            <v-row
-                align="center"
-                class="mx-0"
-            >
-                <v-rating
-                :value="4.5"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="14"
-                ></v-rating>
-
-                <div class="grey--text ml-4">
-                4.5 (413)
-                </div>
-            </v-row>
-
-            <div class="my-4 subtitle-1">
-                $ • Italian, Cafe
-            </div>
-
-            <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
-            </v-card-text>
-
-            <v-divider class="mx-4"></v-divider>
-
-            <v-card-title>Tonight's availability</v-card-title>
-
-            <v-card-text>
-            <v-chip-group
-                v-model="selection"
-                active-class="orange lighten-1 white--text"
-                column
-            >
-                <v-chip>5:30PM</v-chip>
-
-                <v-chip>7:30PM</v-chip>
-
-                <v-chip>8:00PM</v-chip>
-
-                <v-chip>9:00PM</v-chip>
-            </v-chip-group>
-            </v-card-text>
-
-            <v-card-actions>
-            <v-btn
-                color="orange lighten-1"
-                text
-                @click="reserve"
-            >
-                Viac o službe
-            </v-btn>
-            </v-card-actions>
-        </v-card>
-        </v-col>
         
-        <v-col cols="4">
-            <v-card
-            :loading="loading"
-            class="mx-auto my-12"
-            max-width="374"
-        >
-            <template slot="progress">
-            <v-progress-linear
-                color="orange lighten-1"
-                height="10"
-                indeterminate
-            ></v-progress-linear>
-            </template>
+        </v-col>  
+    
+    
 
-            <v-img
-            height="250"
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-            ></v-img>
+    <v-col cols="12" lg="9" md="12">
+        <v-row class="mt-3" >
+            
+                <v-col cols="12" lg="4" md="4" sm="6"  v-for="service in services" :key="service.id">
+                    <v-card
+                    class="mx-10 my-12"
+                    max-width="auto"
+                    >
+                    
 
-            <v-card-title>Cafe Badilico</v-card-title>
+                        <v-img
+                        height="250"
+                        :src="  'storage/' + service.path[0]  "
+                        ></v-img>
 
-            <v-card-text>
-            <v-row
-                align="center"
-                class="mx-0"
-            >
-                <v-rating
-                :value="4.5"
-                color="amber"
-                dense
-                half-increments
-                readonly
-                size="14"
-                ></v-rating>
+                        
+                        <a href="/testservice" style="text-decoration:none; color:black;">
+                            <v-card-title style="word-break: normal;">{{ service.name }}</v-card-title>
+                        </a>
 
-                <div class="grey--text ml-4">
-                4.5 (413)
-                </div>
-            </v-row>
+                        <v-card-text>
+                        <v-row
+                            align="center"
+                            class="mx-0"
+                        >
+                            <v-rating
+                            :value="4.5"
+                            color="amber"
+                            half-increments
+                            readonly
+                            size="20"
+                            ></v-rating>
 
-            <div class="my-4 subtitle-1">
-                $ • Italian, Cafe
-            </div>
+                            <div class="grey--text ml-4">
+                            (413)
+                            </div>
+                        </v-row>
 
-            <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
-            </v-card-text>
+                        <div class="my-4 subtitle-1">
+                            <v-icon>mdi-shape</v-icon>
+                            {{ service.category }}
+                        </div>
 
-            <v-divider class="mx-4"></v-divider>
+                        <div class="my-4 subtitle-1">
+                            <v-icon>mdi-city</v-icon>
+                            {{ service.city }}
+                        </div>
 
-            <v-card-title>Tonight's availability</v-card-title>
+                        <div class="my-4 subtitle-1">
+                            <v-icon>mdi-currency-eur</v-icon>
+                            {{ service.price }}
+                        </div>
 
-            <v-card-text>
-            <v-chip-group
-                v-model="selection"
-                active-class="orange lighten-1 white--text"
-                column
-            >
-                <v-chip>5:30PM</v-chip>
+                        <div class="my-4 subtitle-1">
+                            <v-icon>mdi-account</v-icon>
+                            {{ service.user.name }}
+                        </div>
 
-                <v-chip>7:30PM</v-chip>
+                        </v-card-text>
 
-                <v-chip>8:00PM</v-chip>
+                        <v-divider class="mx-4"></v-divider>
 
-                <v-chip>9:00PM</v-chip>
-            </v-chip-group>
-            </v-card-text>
+                        
 
-            <v-card-actions>
-            <v-btn
-                color="orange lighten-1"
-                text
-                @click="reserve"
-            >
-                Viac o službe
-            </v-btn>
-            </v-card-actions>
-        </v-card>
-        </v-col>
-
+                        <v-card-actions>
+                        <v-btn
+                            color="orange lighten-1"
+                            text
+                        >
+                            Viac o službe
+                        </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-col>
+            
         </v-row>
     </v-col>
-</v-row> 
+    </v-row>  
+
 </v-app>
 
     
@@ -445,16 +268,55 @@
 <script>
     export default {
         data: () => ({
-        loading: false,
         selection: 1,
+        services: [],
+        index: 0,
+        panel: [0, 1],
+        admins: [
+            "Archivácia a ochrana dát",
+            "Spracovanie dát",
+            "Správa registratúry a dokumentov",
+        ],
+        relaxes: [
+            "Kaderníctvo/Barber",
+            "Kozmetický salón",
+            "Masáže",
+            "Nechtové štúdium",
+            "Sauna",
+            "Solárium",
+            "Tetovanie a piercing",
+            "Vizážista",
+            "Wellness",
+        ],
+        cities: [
+            "Bratislava",
+            "Košice",
+            "Prešov",
+            "Poprad",
+            "Nitra",
+            "Žilina",
+        ],
+        sorts: [
+            "Najlacnejšie",
+            "Najdrahšie",
+            "Najnovšie",
+            "Najstaršie",
+        ],
+
         }),
 
         methods: {
-        reserve () {
-            this.loading = true
+            getService() {
+                axios.get('/services').then(response => {
+                    this.services = response.data
+                }).catch(errors =>
+                    console.log(errors)
+                )
+            },
+        },
 
-            setTimeout(() => (this.loading = false), 2000)
-        },
-        },
+        created() {
+            this.getService()
+        }
     }
 </script>

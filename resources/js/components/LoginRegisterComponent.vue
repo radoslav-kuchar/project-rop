@@ -175,6 +175,7 @@ export default {
         success_register: false,
         errorsl: {},
         errorsr: {},
+        
 
         
     }),
@@ -187,10 +188,10 @@ export default {
 
     methods: {
         doLogin() {
-            axios.post("api/login", this.fieldsl).then( response => {
+            axios.post("login", this.fieldsl).then( response => {
                 console.log(response.data)
-                localStorage.setItem('token', response.data.accessToken)
-                this.$router.push('/testhome')
+                localStorage.setItem('accessToken', response.data.accessToken)
+                location.href = '/testhome';
             }).catch( errors => {
                 this.errorsl = errors.response.data.errors
                 this.success = false

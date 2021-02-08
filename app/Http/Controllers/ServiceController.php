@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\Review;
@@ -13,16 +14,40 @@ class ServiceController extends Controller
 {
     public function index(Request $request)
     {   
-        $services = Service::filter()->paginate(10);
+        $servicesPrepare = Service::all();
         //$services = Service::orderByDesc('created_at')->latest()->paginate(10);
 
-        return view('service.index', compact('services'));
+        $services = array();
+
+        foreach($servicesPrepare as $service){
+            $serviceArrayPrepare = array(
+                "id" => $service['id'],
+                "user_id" => $service['user_id'],
+                "user" => $service->user,
+                "name" => $service['name'],
+                "description" => $service['description'],
+                "category" => $service['category'],
+                "city" => $service['city'],
+                "price" => $service['price'],
+                "path" => $service->getPhotos(),
+            );
+
+            array_push($services, $serviceArrayPrepare);
+        }
+
+        return response()->json($services);
     }
 
     public function indexByUser(User $user, Request $request){
-        $services = Service::whereIn('user_id', $user)->latest()->paginate(10);
+        $servicesPrepare = Service::whereIn('user_id', $user)->latest()->paginate(10);
+        
+        $services = array();
 
-        return view('service.index', compact('services'));
+        foreach($servicesPrepare as $service){
+           array_push($services, array_merge(array($service), array($service->getPhotos())));
+        }
+
+        return response()->json($services);
     }
 
 
@@ -42,7 +67,7 @@ class ServiceController extends Controller
             'city' => 'required',
         ]);
 
-        $service = auth()->user()->services()->create([
+        $service = Auth::user()->services()->create([
             'name' => $data['name'],
             'description' => $data['description'],
             'price' => $data['price'],
@@ -62,7 +87,7 @@ class ServiceController extends Controller
             }
         }
 
-        return redirect('/service/user/' . auth()->user()->id);
+        //return redirect('/service/user/' . auth()->user()->id);
     }
 
     /**
@@ -73,7 +98,10 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        $reviews = Review::where('service_id', $service->id)->orderBy('created_at', 'DESC')->paginate(10);
-        return view('service.show', compact('service','reviews'));
+        $reviews = Review::where('service_id', $service->id)->get();
+        
+        $service = array_merge(array($service), array($reviews));
+        
+        return response()->json($service);
     }
 }

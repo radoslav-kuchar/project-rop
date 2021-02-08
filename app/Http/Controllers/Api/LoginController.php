@@ -22,12 +22,13 @@ class LoginController extends Controller
 
         $accessToken = Auth::user()->createToken('authToken')->accessToken;
 
-        return response(['user' => Auth::user(), 'accessToken' => $accessToken]);
+        return response(['user' => Auth::user()->toJson(), 'accessToken' => $accessToken]);
     }
 
     public function logout(Request $request){
-
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['msg' => 'Logout successsssss']);
+        Auth::user()->token()->revoke();
+        
+        $refreshTokenRepository = app('Laravel\Passport\RefreshTokenRepository');
+        $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($request->user()->token()->id);
     }
 }
