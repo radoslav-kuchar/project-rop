@@ -49,7 +49,7 @@ Route::get('/getuser', 'ServiceController@getUser');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get("/test",function(){return view("auth.test");});
+Route::get('/test',function(){return view("auth.test");});
 Route::get("/testhome",function(){return view("service.test-home");});
 Route::get("/testservice",function(){return view("service.create-test");});
 
