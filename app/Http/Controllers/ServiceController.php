@@ -102,6 +102,6 @@ class ServiceController extends Controller
         
         $service = array_merge(array($service), array($reviews));
         
-        return response()->json($service);
+        return view('service.test', compact('service'));
     }
 }
