@@ -50,7 +50,7 @@
                                                 <h1 class="text-center display-1">Vitajte !</h1>
                                                 <h5 class="text-center subtitle-1">Zadajte svoje osobné údaje a začnite svoje podnikanie s nami.</h5>
                                             </v-card-text>
-                                            <div class="text-center">
+                                            <div class="text-center mb-5">
                                                 <v-btn rounded outlined dark @click="step++" class="black--text">Registrácia</v-btn>
                                             </div>
                                         </v-col>

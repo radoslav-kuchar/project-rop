@@ -96,6 +96,10 @@
 
         <v-card v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">
         <v-card-text>
+            <h2 class="title my-2">
+                Vyberte kategóriu
+            </h2>
+
             <h5 class="my-2">
                 Administratívne služby
             </h5>
@@ -188,20 +192,23 @@
                     >
                     
 
-                        <v-img
-                        height="250"
-                        :src="  'storage/' + service.path[0]  "
-                        ></v-img>
+                        <a href="#">
+                            <v-img
+                            height="250"
+                            :src="  'storage/' + service.path[0]  "
+                            ></v-img>
+                        </a>
+                        
 
                         
-                        <a href="/testservice" style="text-decoration:none; color:black;">
+                        <a href="#" style="text-decoration:none; color:black;">
                             <v-card-title style="word-break: normal;">{{ service.name }}</v-card-title>
                         </a>
 
                         <v-card-text>
                         <v-row
                             align="center"
-                            class="mx-0"
+                            class=" mb-3"
                         >
                             <v-rating
                             :value="4.5"
