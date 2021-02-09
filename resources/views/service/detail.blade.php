@@ -23,6 +23,7 @@
 <body>
 
     <div id="app"> 
+        <header-component></header-component>
         <service_detail></service_detail>
     </div>
 

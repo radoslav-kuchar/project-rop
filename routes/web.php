@@ -52,7 +52,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/test',function(){return view("auth.test");});
 Route::get("/testhome",function(){return view("service.test-home");});
 Route::get("/testservice",function(){return view("service.create-test");});
-Route::get("/servicedetail",function(){return view("service.detail");});
+Route::get("/servicedetail/{service}",function(){return view("service.detail");});
 
 Route::get('/userinfo', function(){
     if(Auth::check()){

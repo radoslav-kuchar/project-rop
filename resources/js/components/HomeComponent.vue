@@ -192,9 +192,9 @@
                     >
                     
 
-                        <a href="#">
+                        <a v-bind:href=" '/servicedetail?' + service.id ">
                             <v-img
-                            height="250"
+                            :aspect-ratio="16/9"
                             :src="  'storage/' + service.path[0]  "
                             ></v-img>
                         </a>
