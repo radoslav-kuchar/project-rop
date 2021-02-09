@@ -43,9 +43,7 @@ Route::get('/service/create', 'ServiceController@create')->middleware('auth');
 Route::post('/service', 'ServiceController@store');
 Route::get('/service/{service}', 'ServiceController@show');
 
-
 Route::get('/getuser', 'ServiceController@getUser');
-
 
 Route::get('/home', 'HomeController@index')->name('home');
 
