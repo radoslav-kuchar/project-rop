@@ -100,8 +100,6 @@ class ServiceController extends Controller
     {
         $reviews = Review::where('service_id', $service->id)->get();
         
-        $service = array_merge(array($service), array($reviews));
-        
-        return view('service.test', compact('service'));
+        return view('service.test', compact('service', 'reviews'));
     }
 }
