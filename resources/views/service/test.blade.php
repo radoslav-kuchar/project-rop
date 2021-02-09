@@ -23,7 +23,7 @@
 <body>
 
     <div id="app"> 
-        <service_detail service="{{ $service }}"></service_detail>
+        <service_detail service="{{ $service->toJson() }}"></service_detail>
     </div>
 
     

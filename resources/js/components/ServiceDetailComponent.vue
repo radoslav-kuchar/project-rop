@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-row class="m-5">
+        <!-- <v-row class="m-5">
             <v-col cols="6">
                 <v-carousel
                 :continuous="false"
@@ -23,7 +23,9 @@
             <v-col cols="6">
 
             </v-col>
-    </v-row>
+        </v-row> -->
+
+        <h3 class="">{{ service }}</h3>
 
     </v-app>
 </template>
@@ -32,28 +34,33 @@
 export default {
 
     data: () => ({
-        cycle: true,
-        services: [],
+        /* cycle: true,
+        services: [], */
         
 
     }),
 
     methods: {
-       getService() {
+       /* getService() {
             axios.get('/service/').then(response => {
                 this.services = response.data
             }).catch(errors =>
                 console.log(errors)
             )
-        },
+        }, */
 
     },
 
     created() {
         //this.getService();
 
-        console.log(window.location.href);
-    }
+        /* console.log(window.location.href); */
+    },
+
+    props: [
+        'service',
+
+    ]
 
     
     

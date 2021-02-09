@@ -192,7 +192,7 @@
                     >
                     
 
-                        <a v-bind:href=" '/servicedetail?' + service.id ">
+                        <a v-bind:href=" '/service/' + service.id ">
                             <v-img
                             :aspect-ratio="16/9"
                             :src="  'storage/' + service.path[0]  "
