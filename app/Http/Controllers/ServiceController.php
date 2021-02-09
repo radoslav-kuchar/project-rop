@@ -14,7 +14,7 @@ class ServiceController extends Controller
 {
     public function index(Request $request)
     {   
-        $servicesPrepare = Service::all();
+        $servicesPrepare = Service::filter($request->all())->get();
         //$services = Service::orderByDesc('created_at')->latest()->paginate(10);
 
         $services = array();
