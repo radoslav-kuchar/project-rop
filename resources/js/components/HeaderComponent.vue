@@ -38,10 +38,10 @@
         
 
             <v-toolbar-title class="font-weight-medium">Sprostredkovanie služieb</v-toolbar-title>
-            <v-spacer></v-spacer>
+            <v-spacer></v-spacer>           
             
 
-            <div class="d-flex" >
+            <div class="d-flex" v-if = currentUser.name>
                 <v-avatar color="orange">
                     <v-icon dark>
                         mdi-account-circle
@@ -54,6 +54,15 @@
                     </div>
                 </div>
             </div>
+
+            <a href="/test" v-else style="text-decoration:none;">
+                <div class="d-flex">
+                    <v-btn plain>
+                        Prihlásenie / Registrácia
+                    </v-btn>
+                </div>
+            </a>
+
         </v-app-bar>
 
         
