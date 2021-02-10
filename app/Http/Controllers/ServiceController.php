@@ -99,7 +99,8 @@ class ServiceController extends Controller
     public function show(Service $service)
     {
         $reviews = Review::where('service_id', $service->id)->get();
-        
-        return view('service.test', compact('service', 'reviews'));
+        $service_photos = $service->getPhotos();
+
+        return view('service.test', compact('service', 'service_photos', 'reviews'));
     }
 }
