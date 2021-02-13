@@ -151,7 +151,7 @@ export default {
             }
             
             axios.post('/service', data).then(response => {
-                //location.href = '/testhome';
+                location.href = '/testhome';
                 console.log(response.data);
                 //console.log(this.fields.photos);
             }).catch(errors => {
