@@ -83,7 +83,9 @@ class ServiceController extends Controller
                 $photo = Image::make(public_path("storage/{$path}"))->fit(1024,1024);
                 $photo->save();
 
-                DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $path]);
+                $pathToSave = 'storage/' . $path;
+
+                DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $pathToSave]);
             }
         }
 
