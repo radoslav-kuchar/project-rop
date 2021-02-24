@@ -10,7 +10,7 @@
                                     <v-row>
                                         <v-col cols="12" >
                                             <v-card-text class="mt-12">
-                                                <h1 class="text-center display-2 orange--text text--lighten-1">Vytvorenie služby</h1>                                            
+                                                <h1 class="text-center display-2 yellow--text text--accent-4">Vytvorenie služby</h1>                                            
                                                 <h4 class="text-center mlt-4 subtitle-1">Vyplňte podrobné údaje o vašej službe.</h4>
                                                 <v-form @submit.prevent="submit">
                                                     <v-text-field
@@ -18,7 +18,7 @@
                                                     name="Nazov"
                                                     prepend-icon="mdi-form-textbox"
                                                     type="text"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[rules.required]"
                                                     :error-messages="errors.name"
                                                     hide-details="auto"
@@ -30,7 +30,7 @@
                                                     name="Popis"
                                                     prepend-icon="mdi-image-text"
                                                     rows="3"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[rules.required]"
                                                     :error-messages="errors.description"
                                                     hide-details="auto"
@@ -42,7 +42,7 @@
                                                     name="Cena"
                                                     prepend-icon="mdi-currency-eur"
                                                     type="text"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[rules.required]"
                                                     :error-messages="errors.price"
                                                     hide-details="auto"
@@ -52,7 +52,7 @@
                                                     <v-select
                                                     prepend-icon="mdi-shape"
                                                     :items="categories"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     label="Vyberte kategoriu"
                                                     :rules="[rules.required]"
                                                     v-model="fields.category"
@@ -61,7 +61,7 @@
                                                     <v-select
                                                     prepend-icon="mdi-city"
                                                     :items="places"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     label="Vyberte miesto služby"
                                                     :rules="[rules.required]"
                                                     v-model="fields.city"
@@ -78,7 +78,7 @@
                                                 
                                             </v-card-text>
                                             <div class="text-center mt-3 pb-5">                                                
-                                                <v-btn type="submit" rounded color="orange lighten-1" class="black--text" dark form="check-login-form" @click="doService">Vytvoriť</v-btn>
+                                                <v-btn type="submit" rounded color="yellow accent-4" class="black--text" dark form="check-login-form" @click="doService">Vytvoriť</v-btn>
                                             </div>
                                         </v-col>   
                                     </v-row>
@@ -150,12 +150,12 @@ export default {
                 data.append("photos[]", document.getElementById('photos').files[index]);
             }
             
+
             axios.post('/service', data).then(response => {
                 location.href = '/testhome';
                 console.log(response.data);
                 //console.log(this.fields.photos);
             }).catch(errors => {
-                console.log(errors);
                 this.errors = errors.response.data.errors
             })
         }

@@ -83,7 +83,10 @@ class ServiceController extends Controller
                 $photo = Image::make(public_path("storage/{$path}"))->fit(1024,1024);
                 $photo->save();
 
-                DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $path]);
+                $pathToSave = '/storage/' . $path;
+
+                DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $pathToSave]);
+
             }
         }
 
@@ -101,6 +104,6 @@ class ServiceController extends Controller
         $reviews = Review::where('service_id', $service->id)->get();
         $service_photos = $service->getPhotos();
 
-        return view('service.test', compact('service', 'service_photos', 'reviews'));
+        return view('service.detail', compact('service', 'service_photos', 'reviews'));
     }
 }

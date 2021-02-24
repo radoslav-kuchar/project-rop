@@ -2,7 +2,16 @@
     <v-app style="height: 64px;">
         <v-navigation-drawer app fixed v-model="drawer">
             <v-list dense nav>
-                <v-list-item>
+                <v-list-item v-show="$vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs" v-if="currentUser">
+                    <v-list-item-action>
+                        <v-icon>mdi-account</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>{{ currentUser.name }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item link @click="home">
                     <v-list-item-action>
                         <v-icon>mdi-home</v-icon>
                     </v-list-item-action>
@@ -20,7 +29,7 @@
                     </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item link @click="logout">
+                <v-list-item link @click="logout" v-show="currentUser">
                     <v-list-item-action>
                         <v-icon>mdi-logout</v-icon>
                     </v-list-item-action>
@@ -29,36 +38,49 @@
                     </v-list-item-content>
                 </v-list-item>
 
+                <v-list-item link @click="login" v-if="$vuetify.breakpoint.md || $vuetify.breakpoint.sm || $vuetify.breakpoint.xs" v-show="!currentUser">
+                    <v-list-item-action>
+                        <v-icon>mdi-account-arrow-right-outline</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Prihlásenie</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+
             </v-list>       
         </v-navigation-drawer>
 
 
-        <v-app-bar color="orange lighten-1" app dark>
+        <v-app-bar color="yellow accent-4" app >
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         
 
-            <v-toolbar-title class="font-weight-medium">Sprostredkovanie služieb</v-toolbar-title>
+            <v-toolbar-title class="font-weight-medium">iMake</v-toolbar-title>
             <v-spacer></v-spacer>           
             
 
-            <div class="d-flex" v-if = currentUser.name>
-                <v-avatar color="orange">
-                    <v-icon dark>
+            <div class="d-flex" v-if="currentUser" v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">
+                <v-avatar color="yellow darken-2" v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">
+                    <v-icon >
                         mdi-account-circle
                     </v-icon>
                 </v-avatar>
-                <div class="d-none d-sm-flex flex-row align-center mx-2">
-                    <div class="flex-column">
-                        <div class="body-1">{{ currentUser.name }}</div>
-                        <div class="body-2 font-weight-light">Prihlásený</div>
+                <div class="d-none d-sm-flex flex-row align-center mx-2" v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">
+                    <div class="flex-column" v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">
+                        <div class="body-1" v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">{{ currentUser.name }}</div>
+                        <div class="body-2 font-weight-light" v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">Prihlásený</div>
                     </div>
                 </div>
             </div>
 
-            <a href="/test" v-else style="text-decoration:none;">
+            <a 
+            href="/test" 
+            v-else style="text-decoration:none;"
+            v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl" 
+            >
                 <div class="d-flex">
                     <v-btn plain>
-                        Prihlásenie / Registrácia
+                        Prihlásenie 
                     </v-btn>
                 </div>
             </a>
@@ -108,8 +130,15 @@
             },
 
             service() {
-                location.href = '/testservice';
-                
+                location.href = '/testservice'; 
+            },
+
+            home() {
+                location.href = '/testhome';
+            },
+
+            login() {
+                location.href = '/test';
             }
         },
 

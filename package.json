@@ -31,7 +31,9 @@
         "vuetifyjs-mix-extension": "0.0.17"
     },
     "dependencies": {
+        "vue-gallery-slideshow": "^1.5.2",
         "vue-router": "^3.4.9",
+        "vue-silentbox": "^2.4.0",
         "vuetify": "^2.4.3",
         "webpack": "^5.21.2"
     }

@@ -10,7 +10,7 @@
                                     <v-row>
                                         <v-col cols="12" md="8">
                                             <v-card-text class="mt-12">
-                                                <h1 class="text-center display-2 orange--text text--lighten-1">Prihlásenie</h1>                                            
+                                                <h1 class="text-center display-2 yellow--text text--accent-4">Prihlásenie</h1>                                            
                                                 <h4 class="text-center mlt-4 subtitle-1">Pre prihlásenie zadajte správne údaje</h4>
                                                 <v-form @submit.prevent="submit" id="check-login-form">
                                                     <v-text-field
@@ -18,7 +18,7 @@
                                                     name="Email"
                                                     prepend-icon="mdi-email"
                                                     type="text"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[rules.required, rules.email]"
                                                     :error-messages="errorsl.email"
                                                     hide-details="auto"
@@ -30,7 +30,7 @@
                                                     name="Password"
                                                     prepend-icon="mdi-lock"
                                                     type="password"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[rules.required]"
                                                     :error-messages="errorsl.password"
                                                     hide-details="auto"
@@ -41,11 +41,11 @@
                                             </v-card-text>
                                             <h3 class="text-center mt-3 subtitle-1"><a href="#" style="text-decoration:none;color:black;">Zabudli ste heslo?</a></h3>
                                             <div class="text-center mt-3 pb-5">                                                
-                                                <v-btn type="submit" rounded color="orange lighten-1" class="black--text" dark form="check-login-form" @click="doLogin">Prihlásiť sa</v-btn>
+                                                <v-btn type="submit" rounded color="yellow accent-4" class="black--text" dark form="check-login-form" @click="doLogin">Prihlásiť sa</v-btn>
                                             </div>
                                         </v-col>
 
-                                        <v-col cols="12" md="4" class="orange lighten-1">
+                                        <v-col cols="12" md="4" class="yellow accent-4">
                                             <v-card-text class="black--text mt-12">
                                                 <h1 class="text-center display-1">Vitajte !</h1>
                                                 <h5 class="text-center subtitle-1">Zadajte svoje osobné údaje a začnite svoje podnikanie s nami.</h5>
@@ -59,7 +59,7 @@
                                 </v-window-item>
                                 <v-window-item :value="2">
                                     <v-row class="fill-height">
-                                        <v-col cols="12" md="4" class="orange lighten-1">
+                                        <v-col cols="12" md="4" class="yellow accent-4">
                                             <v-card-text class="black--text mt-12">
                                                 <h1 class="text-center display-1">Vitajte !</h1>
                                                 <h5 class="text-center subtitle-1">Prosím, prihláste sa so svojimi osobnými údajmi.</h5>
@@ -71,7 +71,7 @@
                                         <v-col cols="12" md="8">
                                             <v-card-text class="mt-12">
                                                 
-                                                <h1 class="text-center display-2 orange--text text--lighten-1">Registrácia</h1>
+                                                <h1 class="text-center display-2 yellow--text text--accent-4">Registrácia</h1>
                                                 <h4 class="text-center mlt-4 subtitle-1">Pre registráciu vyplňte osobné údaje</h4>
                                                 <v-alert type="success" v-show="success_register" timeout="-1">Vaša registrácia prebehla úspešne!</v-alert>
                                                 <v-form ref="form">
@@ -80,7 +80,7 @@
                                                     name="Name"
                                                     prepend-icon="mdi-account"
                                                     type="text"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[rules.required, rules.length]"
                                                     :error-messages="errorsr.name"
                                                     hide-details="auto"
@@ -91,7 +91,7 @@
                                                     name="Email"
                                                     prepend-icon="mdi-email"
                                                     type="text"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[rules.required, rules.email]"
                                                     :error-messages="errorsr.email"
                                                     hide-details="auto"
@@ -102,7 +102,7 @@
                                                     name="Password"
                                                     prepend-icon="mdi-lock"
                                                     :type="show1 ? 'text' : 'password'"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[rules.required, rules.lengthPassword]"
                                                     :error-messages="errorsr.password"
                                                     hide-details="auto"
@@ -115,7 +115,7 @@
                                                     name="Re-Password"
                                                     prepend-icon="mdi-lock"
                                                     :type="show2 ? 'text' : 'password'"
-                                                    color="orange lighten-1"
+                                                    color="yellow accent-4"
                                                     :rules="[passwordConfirmationRule]"
                                                     :error-messages="errorsr.rePassword"
                                                     hide-details="auto"
@@ -127,7 +127,7 @@
                                             </v-card-text>
                                             <h3 class="text-center mt-3 subtitle-1"><a href="#" style="text-decoration:none;color:black;">Zabudli ste heslo?</a></h3>
                                             <div class="text-center mt-3 pb-5">
-                                                <v-btn rounded color="orange lighten-1" class="black--text" dark @click="doRegister">Zaregistrovať sa</v-btn>
+                                                <v-btn rounded color="yellow accent-4" class="black--text" dark @click="doRegister">Zaregistrovať sa</v-btn>
                                             </div>
                                         </v-col>
                                     </v-row>
