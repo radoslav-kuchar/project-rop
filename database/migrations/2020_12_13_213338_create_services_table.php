@@ -18,7 +18,7 @@ class CreateServicesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->longText('description');
-            $table->string('category');
+            $table->foreignId('category_id')->references('id')->on('service_categories');
             $table->string('city');
             $table->decimal('price', 8, 2);
             $table->timestamps();

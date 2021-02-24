@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\Review;
+use App\Models\ServiceCategory;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,7 @@ class ServiceController extends Controller
                 "user" => $service->user,
                 "name" => $service['name'],
                 "description" => $service['description'],
-                "category" => $service['category'],
+                "category_id" => $service['category_id'],
                 "city" => $service['city'],
                 "price" => $service['price'],
                 "path" => $service->getPhotos(),
@@ -53,7 +54,8 @@ class ServiceController extends Controller
 
     public function create(User $user, Service $service)
     {
-        return view('service.create', compact('user', 'service'));
+        $categories = ServiceCategory::all();
+        return view('service.create', compact('user', 'service', 'categories'));
     }
 
     public function store(Request $request)
@@ -63,7 +65,7 @@ class ServiceController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|integer ',
-            'category' => 'required',
+            'category_id' => 'required',
             'city' => 'required',
         ]);
 
@@ -71,7 +73,7 @@ class ServiceController extends Controller
             'name' => $data['name'],
             'description' => $data['description'],
             'price' => $data['price'],
-            'category' => $data['category'],
+            'category_id' => $data['category_id'],
             'city' => $data['city'],
         ]);
 
@@ -83,16 +85,14 @@ class ServiceController extends Controller
                 $photo = Image::make(public_path("storage/{$path}"))->fit(1024,1024);
                 $photo->save();
 
-<<<<<<< HEAD
                 $pathToSave = '/storage/' . $path;
 
                 DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $pathToSave]);
 
-=======
                 $pathToSave = 'storage/' . $path;
 
                 DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $pathToSave]);
->>>>>>> 126856478f07d7933c3e243a3e454f4dfb05a53f
+
             }
         }
 

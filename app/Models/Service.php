@@ -11,7 +11,7 @@ class Service extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'name', 'description', 'price', 'category', 'city'
+        'user_id', 'name', 'description', 'price', 'category_id', 'city'
     ];
 
     public function user(){
@@ -21,11 +21,11 @@ class Service extends Model
         return $this->hasMany(Review::class);
     }
     public function scopeFilter($q){
-        if(request('category')){
-            if(request('category') == ''){
+        if(request('category_id')){
+            if(request('category_id') == ''){
                 $q->get();
             }
-            else $q->where('category', '=', request('category'));
+            else $q->where('category_id', '=', request('category_id'));
         }
         if(request('city')){
             if(request('city') == ''){
