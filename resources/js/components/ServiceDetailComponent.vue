@@ -7,8 +7,8 @@
                 <v-row class="m-5 d-flex justify-center">
                     <v-col cols="12" xl="6" lg="6" class="d-flex justify-center">
                         
-                    <v-img class="image z-depth-5" :src="photos[0]" @click="index = 0" style="width:350px;height:auto;" :aspect-ratio="16/9"></v-img>
-                    <vue-gallery-slideshow :images="photos" :index="index" @close="index = null"></vue-gallery-slideshow>
+                        <v-img class="image" :src="photos[0]" @click="index = 0" ></v-img>
+                        <vue-gallery-slideshow :images="photos" :index="index" @close="index = null"></vue-gallery-slideshow>
                     
                     </v-col>
                     
@@ -24,7 +24,7 @@
                     
                             <div class="my-4 subtitle-1">
                                 <v-icon>mdi-shape</v-icon>
-                                {{ service.category }}
+                                {{ service.category_name }}
                             </div>
 
                             <div class="my-4 subtitle-1">
@@ -42,11 +42,12 @@
                             </div>
                         </v-card-text>
 
-                          
 
                         
 
-                        <v-expansion-panels
+                    </v-col>
+                </v-row>
+            <v-expansion-panels
                             v-model="panel"
                             expand
                         >
@@ -111,24 +112,10 @@
                                             
                                         </v-col>
                                     </v-row>
-                                            
-                                        
-                                        
-                                        
-                                            
                                                 
-                                            
-
-                                        
-                                    
-                                    
                                 </v-expansion-panel-content>
                             </v-expansion-panel>
                         </v-expansion-panels>
-
-                    </v-col>
-                </v-row>
-            
             
                
         

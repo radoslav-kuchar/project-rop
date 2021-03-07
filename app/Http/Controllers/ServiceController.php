@@ -102,7 +102,19 @@ class ServiceController extends Controller
     {
         $reviews = Review::where('service_id', $service->id)->get();
         $service_photos = $service->getPhotos();
+        $serviceArray = array(
+            "id" => $service['id'],
+            "user_id" => $service['user_id'],
+            "user" => $service->user,
+            "name" => $service['name'],
+            "description" => $service['description'],
+            "category_id" => $service['category_id'],
+            "category_name" => ServiceCategory::find($service['category_id'])->name,
+            "city" => $service['city'],
+            "price" => $service['price'],
+            "path" => $service->getPhotos(),
+        );
 
-        return view('service.detail', compact('service', 'service_photos', 'reviews'));
+        return view('service.detail', compact('serviceArray', 'service_photos', 'reviews'));
     }
 }

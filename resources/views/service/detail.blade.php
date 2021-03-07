@@ -24,7 +24,7 @@
 
     <div id="app"> 
         <header-component></header-component>
-        <service_detail :service='@json($service)' :photos='@json($service_photos)' :reviews='@json($reviews)'></service_detail>
+        <service_detail :service='@json($serviceArray)' :photos='@json($service_photos)' :reviews='@json($reviews)'></service_detail>
     </div>
 
     
