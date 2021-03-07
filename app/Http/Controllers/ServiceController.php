@@ -89,9 +89,7 @@ class ServiceController extends Controller
 
                 DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $pathToSave]);
 
-                $pathToSave = 'storage/' . $path;
 
-                DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $pathToSave]);
 
             }
         }

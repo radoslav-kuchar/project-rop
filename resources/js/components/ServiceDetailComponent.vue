@@ -41,6 +41,91 @@
                                 <v-btn rounded color="yellow darken-2" class="black--text" dark>Objednať</v-btn>
                             </div>
                         </v-card-text>
+
+                          
+
+                        
+
+                        <v-expansion-panels
+                            v-model="panel"
+                            expand
+                        >
+                            <v-expansion-panel >
+                                <v-expansion-panel-header class="title">Recenzie</v-expansion-panel-header>
+                    
+                                <v-expansion-panel-content>
+                                    <v-form @submit.prevent="submit">
+
+                                        <div class="subtitle">
+                                            Vaše hodnotenie
+                                        </div>
+
+                                        <v-rating
+                                            color="yellow darken-3"
+                                            background-color="yellow darken-2"
+                                            empty-icon="mdi-star-outline"
+                                            full-icon="mdi-star"
+                                            hover
+                                            length="5"
+                                            value="0"
+                                        ></v-rating>
+
+                                        <v-textarea
+                                        label="Text"
+                                        name="Review"
+                                        rows="3"
+                                        color="yellow accent-4"
+                                        class=""
+                                        ></v-textarea>  
+
+                                        <div class="text-center mt-3 pb-5 d-flex justify-end">
+                                            <v-btn plain class="black--text">Odoslať</v-btn>
+                                        </div>
+                                    </v-form>
+
+                                    <div class="title mb-2">
+                                        Recenzie užívateľov
+                                    </div>
+
+                                    <v-row>
+                                        <v-col cols="12" xl="1" lg="1"  class="justify-center align-center">
+                                            <v-avatar color="warning lighten-2" class="ml-2">
+                                                <span class="white--text headline">PK</span>
+                                            </v-avatar>
+                                        </v-col>
+                                        <v-col cols="12" xl="11" lg="11" class="align-center">
+                                            <v-rating
+                                                color="yellow darken-3"
+                                                background-color="yellow darken-2"
+                                                empty-icon="mdi-star-outline"
+                                                full-icon="mdi-star"
+                                                readonly
+                                                size="20"
+                                                length="5"
+                                                value="3"
+                                            ></v-rating>
+                                        
+                                            <div>
+                                                Toto je moja prva recenzia
+                                            </div>
+                                            
+                                        </v-col>
+                                    </v-row>
+                                            
+                                        
+                                        
+                                        
+                                            
+                                                
+                                            
+
+                                        
+                                    
+                                    
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                        </v-expansion-panels>
+
                     </v-col>
                 </v-row>
             
@@ -66,11 +151,9 @@ export default {
     },
     
 data: () => ({
-        images: [
-            'https://i.pinimg.com/originals/61/e7/8b/61e78b08a8dd18779132812218a9f2a8.jpg',
-            'https://i.pinimg.com/originals/1f/87/90/1f8790df8b450fbf5c3b4a6b9db4f822.jpg'
-        ],
         index: null,
+        panel: [0, 1],
+        disabled: false,
 
     }),
 
@@ -114,6 +197,8 @@ data: () => ({
             object-fit: contain !important;
         }  
     }
+
+    
 </style>
 
 

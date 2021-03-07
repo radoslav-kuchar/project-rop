@@ -183,10 +183,10 @@
             
 
             <v-col cols="12" lg="9" md="12">
-                <v-row class="mt-3" >
+                <v-row  >
                     <v-col cols="12" lg="4" md="4" sm="6"  v-for="service in services" :key="service.id">
                         <v-card
-                        class="mx-10 my-12"
+                        class="mx-5 my-7"
                         max-width="auto"
                         >
                             <a v-bind:href=" '/service/' + service.id ">
@@ -260,10 +260,14 @@
             </v-col>
         </v-row>  
 
+        
+
     </v-app>
 </template>
 
 <script>
+
+
     export default {
         data: () => ({
             selection: 1,
@@ -302,6 +306,7 @@
             ],
             filter: '',
             value: 1,
+            test: [],
 
         }),
 
@@ -312,12 +317,24 @@
                 }).catch(errors =>
                     console.log(errors)
                 )
+            },
+            getFilter() {
+                let params = {city: ["Nitra", "Poprad"]}
+                var Qs = require('qs');
+                let myAxios = axios.create({
+                    paramsSerializer: params => Qs.stringify(params, {arrayFormat: 'repeat'})
+                })
+
+                const testik = myAxios.get('/services',{params});
+
+                console.log(testik)
             }
         },
 
         created() {
             this.getService()
-            console.log(this.filter)
+            this.getFilter()
+            
         }
     }
 </script>
