@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\Review;
+use App\Models\City;
 use App\Models\ServiceCategory;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +56,8 @@ class ServiceController extends Controller
     public function create(User $user, Service $service)
     {
         $categories = ServiceCategory::all();
-        return view('service.create', compact('user', 'service', 'categories'));
+        $cities = City::all();
+        return view('service.create', compact('user', 'service', 'categories', 'cities'));
     }
 
     public function store(Request $request)
@@ -102,7 +104,19 @@ class ServiceController extends Controller
     {
         $reviews = Review::where('service_id', $service->id)->get();
         $service_photos = $service->getPhotos();
+        $serviceArray = array(
+            "id" => $service['id'],
+            "user_id" => $service['user_id'],
+            "user" => $service->user,
+            "name" => $service['name'],
+            "description" => $service['description'],
+            "category_id" => $service['category_id'],
+            "category_name" => ServiceCategory::find($service['category_id'])->name,
+            "city" => $service['city'],
+            "price" => $service['price'],
+            "path" => $service->getPhotos(),
+        );
 
-        return view('service.detail', compact('service', 'service_photos', 'reviews'));
+        return view('service.detail', compact('serviceArray', 'service_photos', 'reviews'));
     }
 }

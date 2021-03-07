@@ -11,7 +11,7 @@ class Service extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'name', 'description', 'price', 'category_id', 'city'
+        'user_id', 'name', 'description', 'price', 'category_id', 'city_id'
     ];
 
     public function user(){
@@ -27,11 +27,11 @@ class Service extends Model
             }
             else $q->where('category_id', '=', request('category_id'));
         }
-        if(request('city')){
-            if(request('city') == ''){
+        if(request('city_id')){
+            if(request('city_id') == ''){
                 $q->get();
             }
-            else $q->where('city', '=', request('city'));
+            else $q->where('city_id', '=', request('city_id'));
         }
         if(request('sortBy')){
             if(request('sortBy') == ''){
