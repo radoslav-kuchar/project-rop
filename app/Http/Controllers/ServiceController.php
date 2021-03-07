@@ -29,7 +29,8 @@ class ServiceController extends Controller
                 "description" => $service['description'],
                 "category_id" => $service['category_id'],
                 "category_name" => ServiceCategory::find($service['category_id'])->name,
-                "city" => $service['city'],
+                "city_id" => $service['city_id'],
+                'city_name' => City::find($service['city_id'])->name,
                 "price" => $service['price'],
                 "path" => $service->getPhotos(),
             );
@@ -67,7 +68,7 @@ class ServiceController extends Controller
             'description' => 'required',
             'price' => 'required|integer ',
             'category_id' => 'required',
-            'city' => 'required',
+            'city_id' => 'required',
         ]);
 
         $service = Auth::user()->services()->create([
@@ -75,7 +76,7 @@ class ServiceController extends Controller
             'description' => $data['description'],
             'price' => $data['price'],
             'category_id' => $data['category_id'],
-            'city' => $data['city'],
+            'city_id' => $data['city_id'],
         ]);
         if(isset($request->photos)){
             foreach($request->photos as $photo)
@@ -112,7 +113,8 @@ class ServiceController extends Controller
             "description" => $service['description'],
             "category_id" => $service['category_id'],
             "category_name" => ServiceCategory::find($service['category_id'])->name,
-            "city" => $service['city'],
+            "city_id" => $service['city_id'],
+            "city_name" => City::find($service['city_id'])->name,
             "price" => $service['price'],
             "path" => $service->getPhotos(),
         );
