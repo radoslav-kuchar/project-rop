@@ -18,29 +18,25 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/offline', function () {    
     return view('modules/laravelpwa/offline');
-    });
-
+});
 Route::get('/user/{user}/edit', 'UserController@edit');
+<<<<<<< HEAD
+=======
 
+>>>>>>> afec7b001129c5e2823c71e73c28fb855c308639
 Route::get('/order/create/{service}', 'OrderController@create');
 Route::post('/order', 'OrderController@store');
 Route::get('/order/{order}', 'OrderController@show');
 Route::get('/order/verify/{order}/{token}', 'OrderController@verify');
-
 Route::get('/service/user/{user}', 'ServiceController@indexByUser');
-
 Route::post('/review', 'ReviewController@store')->name('review.store');
-
 Route::get('/services', 'ServiceController@index')->name('services.index');
 Route::get('/service/create', 'ServiceController@create')->middleware('auth');
 Route::post('/service', 'ServiceController@store');
 Route::get('/service/{service}', 'ServiceController@show');
-
 Route::get('/getuser', 'ServiceController@getUser');
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/test',function(){return view("auth.test");});

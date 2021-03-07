@@ -99,26 +99,26 @@ export default {
 
     data: () => ({
         categories: [
-        'Archivácia a ochrana dát',
-        'Spracovanie dát',
-        'Správa registratúry a dokumentov',
-        'Kaderníctvo/Barber',
-        'Kozmetický salón',
-        'Masáže',
-        'Nechtové štúdium',
-        'Sauna',
-        'Solárium',
-        'Tetovanie a piercing',
-        'Vizážista',
-        'Wellness',
+            'Archivácia a ochrana dát',
+            'Spracovanie dát',
+            'Správa registratúry a dokumentov',
+            'Kaderníctvo/Barber',
+            'Kozmetický salón',
+            'Masáže',
+            'Nechtové štúdium',
+            'Sauna',
+            'Solárium',
+            'Tetovanie a piercing',
+            'Vizážista',
+            'Wellness',
         ],
         places: [
-        'Bratislava',
-        'Košice',
-        'Poprad',
-        'Prešov',
-        'Nitra',
-        'Žilina',
+            'Bratislava',
+            'Košice',
+            'Poprad',
+            'Prešov',
+            'Nitra',
+            'Žilina',
         ],
         rules: {
             required: value => !!value || 'Povinné.',
@@ -142,7 +142,7 @@ export default {
             data.append('name', this.fields.name);
             data.append('description', this.fields.description);
             data.append('city', this.fields.city);
-            data.append('category', this.fields.category);
+            data.append('category_id', 1);
             data.append('price', this.fields.price);
 
             var totalfiles = document.getElementById('photos').files.length;
