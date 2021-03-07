@@ -1,124 +1,112 @@
 <template>
     <v-app>
-        
+        <v-row class="m-5 d-flex justify-center">
+            <v-col cols="12" xl="6" lg="6" class="d-flex justify-center">
+                <v-img class="image" :src="photos[0]" @click="index = 0" ></v-img>
+                <vue-gallery-slideshow :images="photos" :index="index" @close="index = null"></vue-gallery-slideshow>   
+            </v-col>
+                    
+            <v-col cols="12" xl="6" lg="6">
+                <v-card-text>
+                    <div class="display-1">
+                        {{ service.name }}
+                    </div>
+
+                    <div class="subtitle-1">
+                        {{ service.description}}
+                    </div>
             
+                    <div class="my-4 subtitle-1">
+                        <v-icon>mdi-shape</v-icon>
+                        {{ service.category_name }}
+                    </div>
+
+                    <div class="my-4 subtitle-1">
+                        <v-icon>mdi-city</v-icon>
+                        {{ service.city }}
+                    </div>
+
+                    <div class="my-4 subtitle-1">
+                        <v-icon>mdi-currency-eur</v-icon>
+                        {{ service.price }}
+                    </div>
+
+                    <div class="text-center mt-3 pb-5">
+                        <v-btn rounded color="yellow darken-2" class="black--text" dark>Objednať</v-btn>
+                    </div>
+                </v-card-text>
+            </v-col>
+
+        </v-row>
             
+        <v-expansion-panels
+            v-model="panel"
+            expand
+        >
+            <v-expansion-panel >
+                <v-expansion-panel-header class="title">Recenzie</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <v-form @submit.prevent="submit">
 
-                <v-row class="m-5 d-flex justify-center">
-                    <v-col cols="12" xl="6" lg="6" class="d-flex justify-center">
-                        
-                        <v-img class="image" :src="photos[0]" @click="index = 0" ></v-img>
-                        <vue-gallery-slideshow :images="photos" :index="index" @close="index = null"></vue-gallery-slideshow>
-                    
-                    </v-col>
-                    
-                    <v-col cols="12" xl="6" lg="6">
-                        <v-card-text>
-                            <div class="display-1">
-                                {{ service.name }}
+                            <div class="subtitle">
+                                Vaše hodnotenie
                             </div>
 
-                            <div class="subtitle-1">
-                                {{ service.description}}
+                            <v-rating
+                                color="yellow darken-3"
+                                background-color="yellow darken-2"
+                                empty-icon="mdi-star-outline"
+                                full-icon="mdi-star"
+                                hover
+                                length="5"
+                                value="0"
+                            ></v-rating>
+
+                            <v-textarea
+                                label="Text"
+                                name="Review"
+                                rows="3"
+                                color="yellow accent-4"
+                                class=""
+                            ></v-textarea>  
+
+                            <div class="text-center mt-3 pb-5 d-flex justify-end">
+                                <v-btn plain class="black--text">Odoslať</v-btn>
                             </div>
-                    
-                            <div class="my-4 subtitle-1">
-                                <v-icon>mdi-shape</v-icon>
-                                {{ service.category_name }}
-                            </div>
+                        </v-form>
 
-                            <div class="my-4 subtitle-1">
-                                <v-icon>mdi-city</v-icon>
-                                {{ service.city }}
-                            </div>
+                        <div class="title mb-2">
+                            Recenzie užívateľov
+                        </div>
 
-                            <div class="my-4 subtitle-1">
-                                <v-icon>mdi-currency-eur</v-icon>
-                                {{ service.price }}
-                            </div>
-
-                            <div class="text-center mt-3 pb-5">
-                                <v-btn rounded color="yellow darken-2" class="black--text" dark>Objednať</v-btn>
-                            </div>
-                        </v-card-text>
-
-
-                        
-
-                    </v-col>
-                </v-row>
-            <v-expansion-panels
-                            v-model="panel"
-                            expand
-                        >
-                            <v-expansion-panel >
-                                <v-expansion-panel-header class="title">Recenzie</v-expansion-panel-header>
-                    
-                                <v-expansion-panel-content>
-                                    <v-form @submit.prevent="submit">
-
-                                        <div class="subtitle">
-                                            Vaše hodnotenie
-                                        </div>
-
-                                        <v-rating
-                                            color="yellow darken-3"
-                                            background-color="yellow darken-2"
-                                            empty-icon="mdi-star-outline"
-                                            full-icon="mdi-star"
-                                            hover
-                                            length="5"
-                                            value="0"
-                                        ></v-rating>
-
-                                        <v-textarea
-                                        label="Text"
-                                        name="Review"
-                                        rows="3"
-                                        color="yellow accent-4"
-                                        class=""
-                                        ></v-textarea>  
-
-                                        <div class="text-center mt-3 pb-5 d-flex justify-end">
-                                            <v-btn plain class="black--text">Odoslať</v-btn>
-                                        </div>
-                                    </v-form>
-
-                                    <div class="title mb-2">
-                                        Recenzie užívateľov
-                                    </div>
-
-                                    <v-row>
-                                        <v-col cols="12" xl="1" lg="1"  class="justify-center align-center">
-                                            <v-avatar color="warning lighten-2" class="ml-2">
-                                                <span class="white--text headline">PK</span>
-                                            </v-avatar>
-                                        </v-col>
-                                        <v-col cols="12" xl="11" lg="11" class="align-center">
-                                            <v-rating
-                                                color="yellow darken-3"
-                                                background-color="yellow darken-2"
-                                                empty-icon="mdi-star-outline"
-                                                full-icon="mdi-star"
-                                                readonly
-                                                size="20"
-                                                length="5"
-                                                value="3"
-                                            ></v-rating>
-                                        
-                                            <div>
-                                                Toto je moja prva recenzia
-                                            </div>
-                                            
-                                        </v-col>
-                                    </v-row>
-                                                
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
-                        </v-expansion-panels>
+                        <v-row>
+                            <v-col cols="12" xl="1" lg="1"  class="justify-center align-center">
+                                <v-avatar color="warning lighten-2" class="ml-2">
+                                    <span class="white--text headline">PK</span>
+                                </v-avatar>
+                            </v-col>
+                            <v-col cols="12" xl="11" lg="11" class="align-center">
+                                <v-rating
+                                    color="yellow darken-3"
+                                    background-color="yellow darken-2"
+                                    empty-icon="mdi-star-outline"
+                                    full-icon="mdi-star"
+                                    readonly
+                                    size="20"
+                                    length="5"
+                                    value="3"
+                                ></v-rating>
+                            
+                                <div>
+                                    Toto je moja prva recenzia
+                                </div>
+                                
+                            </v-col>
+                        </v-row>         
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
             
-               
-        
     </v-app>
 </template>
 

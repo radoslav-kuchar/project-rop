@@ -161,8 +161,7 @@ export default {
             length: value => (value && value.length >= 3) || 'Minimálne 3 znaky',
 
             lengthPassword: value => (value && value.length >= 8) || 'Minimálny počet znakov je 8',
-
-            
+  
         },
         fieldsr: {},
         fieldsl: { 
