@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\Review;
+use App\Models\City;
 use App\Models\ServiceCategory;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +56,8 @@ class ServiceController extends Controller
     public function create(User $user, Service $service)
     {
         $categories = ServiceCategory::all();
-        return view('service.create', compact('user', 'service', 'categories'));
+        $cities = City::all();
+        return view('service.create', compact('user', 'service', 'categories', 'cities'));
     }
 
     public function store(Request $request)

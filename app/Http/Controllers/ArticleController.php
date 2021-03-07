@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\ArticleCategory;
 
 class ArticleController extends Controller
 {
     public function create(){
-        return view('article.create');
+        $article_categories = ArticleCategory::all();
+        return view('article.create', compact('article_categories'));
     }
     public function store(Request $request){
         $data = $request->validate([

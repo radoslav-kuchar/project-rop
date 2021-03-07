@@ -19,7 +19,7 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->longText('description');
             $table->foreignId('category_id')->references('id')->on('service_categories');
-            $table->string('city');
+            $table->foreignId('city_id')->constrained('cities');
             $table->decimal('price', 8, 2);
             $table->timestamps();
 
