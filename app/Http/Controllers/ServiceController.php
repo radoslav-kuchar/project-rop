@@ -27,6 +27,7 @@ class ServiceController extends Controller
                 "name" => $service['name'],
                 "description" => $service['description'],
                 "category_id" => $service['category_id'],
+                "category_name" => ServiceCategory::find($service['category_id'])->name,
                 "city" => $service['city'],
                 "price" => $service['price'],
                 "path" => $service->getPhotos(),
