@@ -25,10 +25,6 @@ Route::get('/offline', function () {
 
 Route::get('/user/{user}/edit', 'UserController@edit');
 
-//Route::get('/profile/{user}', 'ProfileController@show');
-//Route::get('/profile/{user}/edit', 'ProfileController@edit')->name('profile.edit');
-//Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.update');
-
 Route::get('/order/create/{service}', 'OrderController@create');
 Route::post('/order', 'OrderController@store');
 Route::get('/order/{order}', 'OrderController@show');
