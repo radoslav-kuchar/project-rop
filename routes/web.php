@@ -22,6 +22,10 @@ Route::get('/offline', function () {
     return view('modules/laravelpwa/offline');
 });
 Route::get('/user/{user}/edit', 'UserController@edit');
+<<<<<<< HEAD
+=======
+
+>>>>>>> afec7b001129c5e2823c71e73c28fb855c308639
 Route::get('/order/create/{service}', 'OrderController@create');
 Route::post('/order', 'OrderController@store');
 Route::get('/order/{order}', 'OrderController@show');

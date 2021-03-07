@@ -16,7 +16,6 @@ class ServiceController extends Controller
     public function index(Request $request)
     {   
         $servicesPrepare = Service::filter($request->all())->get();
-        //$services = Service::orderByDesc('created_at')->latest()->paginate(10);
 
         $services = array();
 
@@ -28,6 +27,7 @@ class ServiceController extends Controller
                 "name" => $service['name'],
                 "description" => $service['description'],
                 "category_id" => $service['category_id'],
+                "category_name" => ServiceCategory::find($service['category_id'])->name,
                 "city" => $service['city'],
                 "price" => $service['price'],
                 "path" => $service->getPhotos(),
@@ -60,7 +60,6 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-
         $data = request()->validate([
             'name' => 'required',
             'description' => 'required',
@@ -76,7 +75,6 @@ class ServiceController extends Controller
             'category_id' => $data['category_id'],
             'city' => $data['city'],
         ]);
-
         if(isset($request->photos)){
             foreach($request->photos as $photo)
             {
@@ -88,13 +86,10 @@ class ServiceController extends Controller
                 $pathToSave = '/storage/' . $path;
 
                 DB::insert('insert into service_photos (service_id, path) values (?, ?)', [$service->id, $pathToSave]);
-
-
-
             }
         }
 
-        //return redirect('/service/user/' . auth()->user()->id);
+        return redirect('/service/user/' . auth()->user()->id);
     }
 
     /**
