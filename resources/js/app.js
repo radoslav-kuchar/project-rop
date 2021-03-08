@@ -36,6 +36,10 @@ Vue.component('header-component', require('./components/HeaderComponent.vue').de
 Vue.component('home', require('./components/HomeComponent.vue').default);
 Vue.component('create_service', require('./components/CreateServiceComponent.vue').default);
 Vue.component('service_detail', require('./components/ServiceDetailComponent.vue').default);
+Vue.component('blog_home', require('./components/BlogHomeComponent.vue').default);
+Vue.component('blog_create', require('./components/BlogCreateComponent.vue').default);
+Vue.component('blog_detail', require('./components/BlogDetailComponent.vue').default);
+Vue.component('order_create', require('./components/OrderCreateComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

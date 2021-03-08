@@ -41,6 +41,13 @@ Route::get('/test',function(){return view("auth.test");});
 Route::get("/testhome",function(){return view("service.test-home");});
 Route::get("/testservice",function(){return view("service.create-test");});
 
+Route::get("/blog",function(){return view("article.home");});
+Route::get("/blog/create",function(){return view("article.create");});
+Route::get('/blog/1',function(){return view("article.detail");});
+Route::post('/blog/post', 'ArticleController@store');
+
+
+
 Route::get('/userinfo', function(){
     if(Auth::check()){
         return Auth::user();

@@ -220,7 +220,7 @@
 
                                 <div class="my-4 subtitle-1">
                                     <v-icon>mdi-shape</v-icon>
-                                    {{ service.category }}
+                                    {{ service.category_name }}
                                 </div>
 
                                 <div class="my-4 subtitle-1">

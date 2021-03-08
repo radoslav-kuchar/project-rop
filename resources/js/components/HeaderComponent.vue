@@ -29,6 +29,15 @@
                     </v-list-item-content>
                 </v-list-item>
 
+                <v-list-item link @click="blog">
+                    <v-list-item-action>
+                        <v-icon>mdi-alpha-b-box-outline</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Blog</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+
                 <v-list-item link @click="logout" v-show="currentUser">
                     <v-list-item-action>
                         <v-icon>mdi-logout</v-icon>
@@ -56,7 +65,8 @@
         
 
             <v-toolbar-title class="font-weight-medium">iMake</v-toolbar-title>
-            <v-spacer></v-spacer>           
+            <v-spacer></v-spacer>
+                      
             
 
             <div class="d-flex" v-if="currentUser" v-show="$vuetify.breakpoint.lg || $vuetify.breakpoint.xl">
@@ -135,6 +145,10 @@
 
             home() {
                 location.href = '/testhome';
+            },
+
+            blog() {
+                location.href = '/blog';
             },
 
             login() {
