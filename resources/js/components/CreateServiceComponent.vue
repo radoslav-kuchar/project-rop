@@ -141,7 +141,7 @@ export default {
             let data = new FormData();
             data.append('name', this.fields.name);
             data.append('description', this.fields.description);
-            data.append('city', this.fields.city);
+            data.append('city_id', 1); //foreach pri selecte
             data.append('category_id', 1);
             data.append('price', this.fields.price);
 
