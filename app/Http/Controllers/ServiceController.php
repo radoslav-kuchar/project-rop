@@ -29,7 +29,8 @@ class ServiceController extends Controller
                 "description" => $service['description'],
                 "category_id" => $service['category_id'],
                 "category_name" => ServiceCategory::find($service['category_id'])->name,
-                "city" => $service['city'],
+                "city_id" => $service['city_id'],
+                'city_name' => City::find($service['city_id'])->name,
                 "price" => $service['price'],
                 "path" => $service->getPhotos(),
             );
@@ -113,6 +114,7 @@ class ServiceController extends Controller
             "category_id" => $service['category_id'],
             "category_name" => ServiceCategory::find($service['category_id'])->name,
             "city_id" => $service['city_id'],
+            "city_name" => City::find($service['city_id'])->name,
             "price" => $service['price'],
             "path" => $service->getPhotos(),
         );

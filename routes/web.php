@@ -22,9 +22,6 @@ Route::get('/offline', function () {
     return view('modules/laravelpwa/offline');
 });
 Route::get('/user/{user}/edit', 'UserController@edit');
-
-Route::get('/order/create',function(){return view("order.test-create");});
-
 Route::get('/order/create/{service}', 'OrderController@create');
 Route::post('/order', 'OrderController@store');
 Route::get('/order/{order}', 'OrderController@show');
@@ -37,6 +34,8 @@ Route::post('/service', 'ServiceController@store');
 Route::get('/service/{service}', 'ServiceController@show');
 Route::get('/getuser', 'ServiceController@getUser');
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('articles', ArticleController::class);
 
 Route::get('/test',function(){return view("auth.test");});
 Route::get("/testhome",function(){return view("service.test-home");});
