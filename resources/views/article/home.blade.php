@@ -26,7 +26,7 @@
 
     <div id="app"> 
         <header-component></header-component>
-        <blog_home></blog_home>
+        <blog_home :posts='@json($articles)'></blog_home>
     </div>
 
 </body>
