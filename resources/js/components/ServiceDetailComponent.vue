@@ -60,6 +60,7 @@
                                 hover
                                 length="5"
                                 value="0"
+                                v-model.number="fields.stars"
                             ></v-rating>
 
                             <v-textarea
@@ -68,10 +69,11 @@
                                 rows="3"
                                 color="yellow accent-4"
                                 class=""
+                                v-model="fields.review"
                             ></v-textarea>  
 
                             <div class="text-center mt-3 pb-5 d-flex justify-end">
-                                <v-btn plain class="black--text">Odoslať</v-btn>
+                                <v-btn plain class="black--text" @click="review">Odoslať</v-btn>
                             </div>
                         </v-form>
 
@@ -94,7 +96,6 @@
                                     readonly
                                     size="20"
                                     length="5"
-                                    value="3"
                                 ></v-rating>
                             
                                 <div>
@@ -129,6 +130,10 @@ data: () => ({
         index: null,
         panel: [0, 1],
         disabled: false,
+        fields: {},
+        user_id: {},
+        errors: {},
+
 
     }),
 
@@ -136,14 +141,39 @@ data: () => ({
 
         order(){
             location.href = '/order/create/'+ this.service.id;
-        }
+        },
+
+        review(){
+            let data = new FormData();
+            data.append('review', this.fields.review);
+            data.append('stars', this.fields.stars);
+            data.append('service_id', this.service.id);
+            data.append('user_id', this.user_id.id);
+
+            axios.post('/review', data).then(response => {
+                console.log(response.data);
+            }).catch(errors => {
+                this.errors = errors.response.data.errors
+            })
+        
+        },
+
+        getUser() {
+            axios.get('/userinfo').then(response => {
+                this.user_id = response.data
+            }).catch(errors =>
+                console.log(errors)
+            )
+        },
 
     },
 
     created() {
+        this.getUser()
         console.log(this.service);
         console.log(this.photos);
         console.log(this.reviews);
+        console.log(this.user_id);
     },
 
        

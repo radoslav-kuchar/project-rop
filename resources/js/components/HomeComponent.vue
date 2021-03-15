@@ -319,8 +319,8 @@
                     console.log(errors)
                 )
             },
-            getFilter() {
-                let params = {city: ["Nitra", "Poprad"]}
+            /* getFilter() {
+                let params = {city: ["Abrahámovce ", "Biela Voda"]}
                 var Qs = require('qs');
                 let myAxios = axios.create({
                     paramsSerializer: params => Qs.stringify(params, {arrayFormat: 'repeat'})
@@ -329,7 +329,7 @@
                 const testik = myAxios.get('/services',{params});
 
                 console.log(testik)
-            }
+            } */
         },
 
         created() {

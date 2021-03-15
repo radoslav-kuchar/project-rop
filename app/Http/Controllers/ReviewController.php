@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Review;
 
 class ReviewController extends Controller
 {
@@ -15,8 +16,8 @@ class ReviewController extends Controller
             'user_id' => 'required'
         ]);
 
-        auth()->user()->reviews()->create($data);
+        Review::create($data);
 
-        return back()->with('success', 'Recenzia úspešne pridaná.');
+        return redirect('/');
     }
 }
