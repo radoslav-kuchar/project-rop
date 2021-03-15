@@ -22,17 +22,19 @@ class ServiceController extends Controller
 
         foreach($servicesPrepare as $service){
             $serviceArrayPrepare = array(
-                "id" => $service['id'],
-                "user_id" => $service['user_id'],
-                "user" => $service->user,
-                "name" => $service['name'],
-                "description" => $service['description'],
-                "category_id" => $service['category_id'],
-                "category_name" => ServiceCategory::find($service['category_id'])->name,
-                "city_id" => $service['city_id'],
+                'id' => $service['id'],
+                'user_id' => $service['user_id'],
+                'user' => $service->user,
+                'name' => $service['name'],
+                'description' => $service['description'],
+                'category_id' => $service['category_id'],
+                'category_name' => ServiceCategory::find($service['category_id'])->name,
+                'city_id' => $service['city_id'],
                 'city_name' => City::find($service['city_id'])->name,
-                "price" => $service['price'],
-                "path" => $service->getPhotos(),
+                'price' => $service['price'],
+                'path' => $service->getPhotos(),
+                'review_avg' => Review::where('service_id', $service->id)->avg('stars'),
+                'reviews' => Review::where('service_id', $service->id)->count(),
             );
 
             array_push($services, $serviceArrayPrepare);
