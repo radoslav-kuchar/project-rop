@@ -13,10 +13,10 @@
 
         <v-col>
 
-            <v-card-title>Top 10 Najlepších služieb na iMake</v-card-title>
+            <v-card-title>{{ article.title }}</v-card-title>
 
             <v-card-text class="text--primary">
-                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum imperdiet quis arcu eu dictum. Integer facilisis nec sem non semper. Proin volutpat dolor quis diam lacinia egestas. Praesent sit amet velit est. Maecenas dapibus, mi a ultricies convallis, nulla dolor sodales nibh, eu laoreet elit sem at odio.</div>
+                <div>{{ article.content }}</div>
             </v-card-text>
 
         </v-col>
@@ -40,6 +40,10 @@
 
         created() {
             
+        },
+
+        props: {
+            article: {},
         }
     }
 </script>

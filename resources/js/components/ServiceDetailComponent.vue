@@ -23,7 +23,7 @@
 
                     <div class="my-4 subtitle-1">
                         <v-icon>mdi-city</v-icon>
-                        {{ service.city }}
+                        {{ service.city_name }}
                     </div>
 
                     <div class="my-4 subtitle-1">
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="text-center mt-3 pb-5">
-                        <v-btn rounded color="yellow darken-2" class="black--text" dark>Objednať</v-btn>
+                        <v-btn rounded color="yellow darken-2" class="black--text" @click="order" dark>Objednať</v-btn>
                     </div>
                 </v-card-text>
             </v-col>
@@ -132,7 +132,13 @@ data: () => ({
 
     }),
 
-    
+    methods: {
+
+        order(){
+            location.href = '/order/create/'+ this.service.id;
+        }
+
+    },
 
     created() {
         console.log(this.service);

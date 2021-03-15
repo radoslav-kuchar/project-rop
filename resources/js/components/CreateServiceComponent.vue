@@ -49,24 +49,28 @@
                                                     v-model="fields.price"
                                                     class="mb-5"
                                                     ></v-text-field>
-                                                    <v-select
+                                                    <v-autocomplete
                                                     prepend-icon="mdi-shape"
-                                                    :items="categories"
+                                                    :items="cats"
+                                                    item-text="name"
+                                                    item-value="id"
                                                     color="yellow accent-4"
                                                     label="Vyberte kategoriu"
                                                     :rules="[rules.required]"
                                                     v-model="fields.category"
                                                     :error-messages="errors.category"
-                                                    ></v-select>
-                                                    <v-select
+                                                    ></v-autocomplete>
+                                                    <v-autocomplete
                                                     prepend-icon="mdi-city"
-                                                    :items="places"
-                                                    color="yellow accent-4"
-                                                    label="Vyberte miesto služby"
-                                                    :rules="[rules.required]"
                                                     v-model="fields.city"
+                                                    :items="places"
+                                                    item-text="name"
+                                                    item-value="id"
+                                                    label="Vyberte miesto služby"
+                                                    color="yellow accent-4"
                                                     :error-messages="errors.city"
-                                                    ></v-select>
+                                                    :rules="[rules.required]"
+                                                    ></v-autocomplete>
                                                     <v-file-input
                                                         label="Pridajte fotografie"
                                                         multiple
@@ -96,30 +100,14 @@
 
 <script>
 export default {
-
     data: () => ({
-        categories: [
-            'Archivácia a ochrana dát',
-            'Spracovanie dát',
-            'Správa registratúry a dokumentov',
-            'Kaderníctvo/Barber',
-            'Kozmetický salón',
-            'Masáže',
-            'Nechtové štúdium',
-            'Sauna',
-            'Solárium',
-            'Tetovanie a piercing',
-            'Vizážista',
-            'Wellness',
-        ],
-        places: [
-            'Bratislava',
-            'Košice',
-            'Poprad',
-            'Prešov',
-            'Nitra',
-            'Žilina',
-        ],
+        cats: {
+
+        },
+
+        places: {
+            
+        },
         rules: {
             required: value => !!value || 'Povinné.',
 
@@ -141,8 +129,8 @@ export default {
             let data = new FormData();
             data.append('name', this.fields.name);
             data.append('description', this.fields.description);
-            data.append('city_id', 1); //foreach pri selecte
-            data.append('category_id', 1);
+            data.append('city_id', this.fields.city); //foreach pri selecte
+            data.append('category_id', this.fields.category);
             data.append('price', this.fields.price);
 
             var totalfiles = document.getElementById('photos').files.length;
@@ -152,7 +140,7 @@ export default {
             
 
             axios.post('/service', data).then(response => {
-                location.href = '/testhome';
+                location.href = '/home';
                 console.log(response.data);
                 //console.log(this.fields.photos);
             }).catch(errors => {
@@ -162,8 +150,16 @@ export default {
         
     },
 
+    created(){
+        this.places = this.cities
+        this.cats = this.categories
+        console.log(this.cats)
+    },
+
     props: {
-        source: String
+        source: String,
+        cities: {},
+        categories: {},
     }
     
 };

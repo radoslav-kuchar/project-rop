@@ -206,8 +206,9 @@
                                     class=" mb-3"
                                 >
                                     <v-rating
-                                    :value="4.5"
-                                    color="amber"
+                                    :value="2"
+                                    color="yellow accent-4"
+                                    background-color="yellow darken-1"
                                     half-increments
                                     readonly
                                     size="20"
@@ -225,7 +226,7 @@
 
                                 <div class="my-4 subtitle-1">
                                     <v-icon>mdi-city</v-icon>
-                                    {{ service.city }}
+                                    {{ service.city_name }}
                                 </div>
 
                                 <div class="my-4 subtitle-1">

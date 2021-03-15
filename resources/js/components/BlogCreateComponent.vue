@@ -27,7 +27,9 @@
                                                     ></v-text-field>
                                                     <v-select
                                                     prepend-icon="mdi-shape"
-                                                    :items="categories"
+                                                    :items="cats"
+                                                    item-text="name"
+                                                    item-value="id"
                                                     color="yellow accent-4"
                                                     label="Vyberte kategóriu"
                                                     :rules="[rules.required]"
@@ -66,6 +68,8 @@
 
 <script>
     export default {
+
+        
         data: () => ({
             rules: {
                 required: value => !!value || 'Povinné.',
@@ -73,8 +77,8 @@
             fields: {},
             success: false,
             errors: {},
-            categories: [
-                'General',
+            cats: [
+                
             ],
 
         }),
@@ -86,8 +90,8 @@
                 data.append('content', this.fields.content);
                 data.append('article_category_id', 1);
                 
-                axios.post('/blog/post', data).then(response => {
-                    location.href = '/blog';
+                axios.post('/articles', data).then(response => {
+                    location.href = '/articles';
                     console.log(response.data);
                     //console.log(this.fields.photos);
                 }).catch(errors => {
@@ -97,7 +101,12 @@
         },
 
         created() {
-            
+            console.log(this.cities)
+            this.cats = this.categories
+        },
+
+        props: {
+            categories: {},
         }
     }
 </script>

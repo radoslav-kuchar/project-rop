@@ -15,11 +15,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::paginate(12);
+        //$articles = Article::paginate(12);
+
+        $articles = Article::all();
         foreach($articles as $article){
             $article->article_category = ArticleCategory::find($article->article_category_id)->name;
         }
-        return view('article.home', compact('articles'));
+        return view('article.index', compact('articles'));
     }
 
     public function create(){
@@ -50,7 +52,7 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         $article->article_category = ArticleCategory::find($article->article_category_id)->name;
-        return view('article.detail', compact('article'));
+        return view('article.show', compact('article'));
     }
 
     /**

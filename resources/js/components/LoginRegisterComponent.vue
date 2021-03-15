@@ -190,7 +190,7 @@ export default {
             axios.post("login", this.fieldsl).then( response => {
                 console.log(response.data)
                 localStorage.setItem('accessToken', response.data.accessToken)
-                location.href = '/testhome';
+                location.href = '/home';
             }).catch( errors => {
                 this.errorsl = errors.response.data.errors
                 this.success = false

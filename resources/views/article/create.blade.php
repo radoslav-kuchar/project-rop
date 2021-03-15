@@ -25,7 +25,7 @@
 <body>
 
     <div id="app"> 
-        <blog_create></blog_create>
+        <blog_create :categories='@json($article_categories)'></blog_create>
     </div>
 
 </body>

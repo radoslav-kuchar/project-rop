@@ -133,26 +133,26 @@
             logout() {
                 axios.post("/logout").then(response =>{
                     localStorage.removeItem('token');
-                    location.href = '/test';
+                    location.href = '/login';
                 }).catch(errors => {
                     console.log(errors.response.data);
                 })
             },
 
             service() {
-                location.href = '/testservice'; 
+                location.href = '/service/create'; 
             },
 
             home() {
-                location.href = '/testhome';
+                location.href = '/home';
             },
 
             blog() {
-                location.href = '/blog';
+                location.href = '/articles';
             },
 
             login() {
-                location.href = '/test';
+                location.href = '/login';
             }
         },
 
