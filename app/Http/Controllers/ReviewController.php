@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -13,10 +14,14 @@ class ReviewController extends Controller
             'review' => '',
             'stars' => 'required',
             'service_id' => 'required',
-            'user_id' => 'required'
         ]);
 
-        Review::create($data);
+        Review::create([
+            'review' => $data['review'],
+            'stars' => $data['stars'],
+            'service_id' => $data['service_id'],
+            'user_id' => Auth::user()->id,
+        ]);
 
         return redirect('/');
     }

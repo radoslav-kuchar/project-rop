@@ -16,45 +16,19 @@ class ServiceController extends Controller
 {
     public function index(Request $request)
     {   
-        $servicesPrepare = Service::filter($request->all())->get();
+        $services = Service::paginate(1);
 
-        $services = array();
-
-        foreach($servicesPrepare as $service){
-            $serviceArrayPrepare = array(
-                'id' => $service['id'],
-                'user_id' => $service['user_id'],
-                'user' => $service->user,
-                'name' => $service['name'],
-                'description' => $service['description'],
-                'category_id' => $service['category_id'],
-                'category_name' => ServiceCategory::find($service['category_id'])->name,
-                'city_id' => $service['city_id'],
-                'city_name' => City::find($service['city_id'])->name,
-                'price' => $service['price'],
-                'path' => $service->getPhotos(),
-                'review_avg' => Review::where('service_id', $service->id)->avg('stars'),
-                'reviews' => Review::where('service_id', $service->id)->count(),
-            );
-
-            array_push($services, $serviceArrayPrepare);
+        foreach($services as $service) {
+            $service->category_name = ServiceCategory::find($service['category_id'])->name;
+            $service->city_name = City::find($service['city_id'])->name;
+            $service->path = $service->getPhotos();
+            $service->review_avg = Review::where('service_id', $service->id)->avg('stars');
+            $service->reviews = Review::where('service_id', $service->id)->count();
+            $service->user_name = User::find($service->user_id)->name;
         }
 
-        return response()->json($services);
+        return view('service.index', compact('services'));
     }
-
-    public function indexByUser(User $user, Request $request){
-        $servicesPrepare = Service::whereIn('user_id', $user)->latest()->paginate(10);
-        
-        $services = array();
-
-        foreach($servicesPrepare as $service){
-           array_push($services, array_merge(array($service), array($service->getPhotos())));
-        }
-
-        return response()->json($services);
-    }
-
 
     public function create(User $user, Service $service)
     {
@@ -105,22 +79,11 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
+        $service->city_name = City::find($service['city_id'])->name;
+        $service->path = $service->getPhotos();
+        $service->category_name = ServiceCategory::find($service['category_id'])->name;
         $reviews = Review::where('service_id', $service->id)->get();
-        $service_photos = $service->getPhotos();
-        $serviceArray = array(
-            "id" => $service['id'],
-            "user_id" => $service['user_id'],
-            "user" => $service->user,
-            "name" => $service['name'],
-            "description" => $service['description'],
-            "category_id" => $service['category_id'],
-            "category_name" => ServiceCategory::find($service['category_id'])->name,
-            "city_id" => $service['city_id'],
-            "city_name" => City::find($service['city_id'])->name,
-            "price" => $service['price'],
-            "path" => $service->getPhotos(),
-        );
-
-        return view('service.detail', compact('serviceArray', 'service_photos', 'reviews'));
+   
+        return view('service.detail', compact('service', 'reviews'));
     }
 }
