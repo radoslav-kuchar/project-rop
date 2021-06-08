@@ -184,29 +184,29 @@
 
             <v-col cols="12" lg="9" md="12">
                 <v-row  >
-                    <v-col cols="12" lg="4" md="4" sm="6"  v-for="service in services" :key="service.id">
+                    <v-col cols="12" lg="4" md="4" sm="6"  v-for="ser in sers" :key="ser.id">
                         <v-card
                         class="mx-5 my-7"
                         max-width="auto"
                         >
-                            <a v-bind:href=" '/service/' + service.id ">
+                            <a v-bind:href=" '/service/' + ser.id ">
                                 <v-img
                                 :aspect-ratio="16/9"
-                                :src=" service.path[0]  "
+                                :src=" ser.path[0]  "
                                 ></v-img>
                             </a>
         
                             <a href="#" style="text-decoration:none; color:black;">
-                                <v-card-title style="word-break: normal;">{{ service.name }}</v-card-title>
+                                <v-card-title style="word-break: normal;">{{ ser.name }}</v-card-title>
                             </a>
 
                             <v-card-text>
                                 <v-row
                                     align="center"
-                                    class=" mb-3"
+                                    class="mb-3"
                                 >
                                     <v-rating
-                                    :value="2"
+                                    :value="ser.review_avg"
                                     color="yellow accent-4"
                                     background-color="yellow darken-1"
                                     half-increments
@@ -214,29 +214,29 @@
                                     size="20"
                                     ></v-rating>
 
-                                    <div class="grey--text ml-4">
-                                    (413)
+                                    <div class="grey--text ml-4 mt-1">
+                                    {{ ser.reviews }}
                                     </div>
                                 </v-row>
 
                                 <div class="my-4 subtitle-1">
                                     <v-icon>mdi-shape</v-icon>
-                                    {{ service.category_name }}
+                                    {{ ser.category_name }}
                                 </div>
 
                                 <div class="my-4 subtitle-1">
                                     <v-icon>mdi-city</v-icon>
-                                    {{ service.city_name }}
+                                    {{ ser.city_name }}
                                 </div>
 
                                 <div class="my-4 subtitle-1">
                                     <v-icon>mdi-currency-eur</v-icon>
-                                    {{ service.price }}
+                                    {{ ser.price }}
                                 </div>
 
                                 <div class="my-4 subtitle-1">
                                     <v-icon>mdi-account</v-icon>
-                                    {{ service.user.name }}
+                                    {{ ser.user_name }}
                                 </div>
 
                             </v-card-text>
@@ -246,7 +246,7 @@
                                 
 
                             <v-card-actions>
-                                <a v-bind:href=" '/service/' + service.id ">
+                                <a v-bind:href=" '/service/' + ser.id ">
                                     <v-btn
                                         color="yellow accent-4"
                                         text
@@ -259,9 +259,8 @@
                     </v-col>
                 </v-row>
             </v-col>
-        </v-row>  
+        </v-row> 
 
-        
 
     </v-app>
 </template>
@@ -272,7 +271,6 @@
     export default {
         data: () => ({
             selection: 1,
-            services: [],
             index: 0,
             panel: [0, 1],
             admins: [
@@ -308,17 +306,11 @@
             filter: '',
             value: 1,
             test: [],
+            sers: {}
 
         }),
 
         methods: {
-            getService() {
-                axios.get('/services').then(response => {
-                    this.services = response.data
-                }).catch(errors =>
-                    console.log(errors)
-                )
-            },
             /* getFilter() {
                 let params = {city: ["Abrahámovce ", "Biela Voda"]}
                 var Qs = require('qs');
@@ -333,9 +325,14 @@
         },
 
         created() {
-            this.getService()
-            this.getFilter()
+            /* this.getFilter() */
+            console.log(this.services)
+            this.sers = this.services.data
             
+        },
+
+        props: {
+            services: {}
         }
     }
 </script>

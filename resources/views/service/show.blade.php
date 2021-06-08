@@ -68,7 +68,7 @@
         @endforeach
         <div class="row pt-2">
         <div class="col-12 d-flex justify-content-center">
-            {{ $reviews->links() }}
+            
         </div>
     </div>
     </div>

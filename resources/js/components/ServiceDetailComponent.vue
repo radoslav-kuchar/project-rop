@@ -2,8 +2,8 @@
     <v-app>
         <v-row class="m-5 d-flex justify-center">
             <v-col cols="12" xl="6" lg="6" class="d-flex justify-center">
-                <v-img class="image" :src="photos[0]" @click="index = 0" ></v-img>
-                <vue-gallery-slideshow :images="photos" :index="index" @close="index = null"></vue-gallery-slideshow>   
+                <v-img class="image" :src="service.path[0]" @click="index = 0" ></v-img>
+                <vue-gallery-slideshow :images="service.path" :index="index" @close="index = null"></vue-gallery-slideshow>   
             </v-col>
                     
             <v-col cols="12" xl="6" lg="6">
@@ -41,10 +41,11 @@
             
         <v-expansion-panels
             v-model="panel"
-            expand
+            multiple
         >
             <v-expansion-panel >
                 <v-expansion-panel-header class="title">Recenzie</v-expansion-panel-header>
+                    <v-alert type="success" v-show="success_review" timeout="-1">Recenzia bola pridaná úspešne!</v-alert>
                     <v-expansion-panel-content>
                         <v-form @submit.prevent="submit">
 
@@ -77,33 +78,38 @@
                             </div>
                         </v-form>
 
-                        <div class="title mb-2">
+                        <div class="title mb-5">
                             Recenzie užívateľov
                         </div>
-
-                        <v-row>
-                            <v-col cols="12" xl="1" lg="1"  class="justify-center align-center">
-                                <v-avatar color="warning lighten-2" class="ml-2">
-                                    <span class="white--text headline">PK</span>
-                                </v-avatar>
-                            </v-col>
-                            <v-col cols="12" xl="11" lg="11" class="align-center">
-                                <v-rating
-                                    color="yellow darken-3"
-                                    background-color="yellow darken-2"
-                                    empty-icon="mdi-star-outline"
-                                    full-icon="mdi-star"
-                                    readonly
-                                    size="20"
-                                    length="5"
-                                ></v-rating>
-                            
-                                <div>
-                                    Toto je moja prva recenzia
-                                </div>
-                                
-                            </v-col>
-                        </v-row>         
+                        
+                        <div v-if="reviews.length > 0">
+                            <v-row v-for="review in reviews" :key="review.id" class="mb-3">
+                                <!-- <v-col cols="12" xl="1" lg="1"  class="justify-center align-center">
+                                    <v-avatar color="warning lighten-2" class="ml-2">
+                                        <span class="white--text headline">IM</span>
+                                    </v-avatar>
+                                </v-col> -->
+                                <v-col cols="12" class="align-center">
+                                    
+                                    <v-rating
+                                        color="yellow darken-3"
+                                        background-color="yellow darken-2"
+                                        empty-icon="mdi-star-outline"
+                                        full-icon="mdi-star"
+                                        readonly
+                                        :value="review.stars"
+                                        size="20"
+                                        length="5"
+                                    ></v-rating>
+                                    <h4>{{ review.user_name }}</h4>
+                                    <div>
+                                        {{ review.review }}
+                                    </div>
+                                    
+                                </v-col>
+                            </v-row>   
+                        </div> 
+                        <div v-else>K tejto službe doposiaľ neboli pridané žiadne recenzie.</div>     
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
@@ -121,18 +127,19 @@ export default {
     },
 
     props: {
-        photos: [],
         service: {},  
         reviews: {},
     },
     
 data: () => ({
-        index: null,
-        panel: [0, 1],
-        disabled: false,
-        fields: {},
-        user_id: {},
-        errors: {},
+    index: null,
+    panel: [0, 1],
+    disabled: false,
+    fields: {},
+    user_id: {},
+    errors: {},
+    success_review: false,
+
 
 
     }),
@@ -148,32 +155,21 @@ data: () => ({
             data.append('review', this.fields.review);
             data.append('stars', this.fields.stars);
             data.append('service_id', this.service.id);
-            data.append('user_id', this.user_id.id);
 
             axios.post('/review', data).then(response => {
                 console.log(response.data);
+                this.success_review = true;
             }).catch(errors => {
                 this.errors = errors.response.data.errors
             })
         
-        },
-
-        getUser() {
-            axios.get('/userinfo').then(response => {
-                this.user_id = response.data
-            }).catch(errors =>
-                console.log(errors)
-            )
-        },
+        }
 
     },
 
     created() {
-        this.getUser()
         console.log(this.service);
-        console.log(this.photos);
         console.log(this.reviews);
-        console.log(this.user_id);
     },
 
        

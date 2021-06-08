@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>iMake</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -25,7 +25,8 @@
 <body>
 
     <div id="app"> 
-        <order_create></order_create>
+        <header-component></header-component>
+        <order_create :service='@json($service)'></order_create>
     </div>
 
 </body>

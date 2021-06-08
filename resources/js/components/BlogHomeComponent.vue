@@ -18,7 +18,7 @@
 
                         <v-card-title>{{ post.title }}</v-card-title>
                         <v-card-text class="text--primary">
-                            <div>{{ post.content }}</div>
+                            <div>{{ post.content | truncate(200, '...') }}</div>
                         </v-card-text>
 
                         <v-card-actions>
@@ -52,6 +52,16 @@
 
         created() {
             console.log(this.posts)
+        },
+
+        filters: {
+            truncate: function (text, length, suffix) {
+                if (text.length > length) {
+                    return text.substring(0, length) + suffix;
+                } else {
+                    return text;
+                }
+            },
         },
 
         props: {

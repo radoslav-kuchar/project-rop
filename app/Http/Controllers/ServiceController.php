@@ -73,7 +73,7 @@ class ServiceController extends Controller
             }
         }
 
-        return redirect('/service/user/' . auth()->user()->id);
+        return redirect('/services');
     }
 
     /**
@@ -87,7 +87,14 @@ class ServiceController extends Controller
         $service->city_name = City::find($service['city_id'])->name;
         $service->path = $service->getPhotos();
         $service->category_name = ServiceCategory::find($service['category_id'])->name;
+
         $reviews = Review::where('service_id', $service->id)->get();
+        foreach($reviews as $review)
+        {
+            $review->user_name = User::find($review->user_id)->name;
+        }
+
+        $service->user_name = User::find($service->user_id)->name;
 
         return view('service.detail', compact('service', 'reviews'));
     }

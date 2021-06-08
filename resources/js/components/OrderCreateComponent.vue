@@ -1,5 +1,7 @@
 <template>
     <v-app>
+        <v-alert type="success" v-show="success_order" timeout="-1">Objednávka bola úspešná!</v-alert>
+
         <v-stepper
             v-model="e6"
             vertical
@@ -65,13 +67,10 @@
                 </v-form>
                 <v-btn
                     color="yellow accent-4"
-                    @click="e6 = 2, doContinue"
+                    @click="e6 = 2"
                     
                 >
                     Pokračovať
-                </v-btn>
-                <v-btn text>
-                    Zatvoriť
                 </v-btn>
             </v-stepper-content>
 
@@ -95,8 +94,10 @@
                 >
                     Pokračovať
                 </v-btn>
-                <v-btn text>
-                    Zatvoriť
+                <v-btn
+                    @click="e6 = 1"
+                >
+                    Krok späť
                 </v-btn>
             </v-stepper-content>
 
@@ -126,8 +127,10 @@
                 >
                     Pokračovať
                 </v-btn>
-                <v-btn text>
-                    Zatvoriť
+                <v-btn
+                    @click="e6 = 2"
+                >
+                    Krok späť
                 </v-btn>
             </v-stepper-content>
 
@@ -139,15 +142,18 @@
                 v-model="checkbox2"
                 :label="'Súhlasím so všeobecnými obchodnými podmienkami'"
                 color="yellow accent-4"
+                :rules="[rules.required]"
                 ></v-checkbox>
                 <v-btn
                     color="yellow accent-4"
-                    @click="e6 = 1"
+                    @click="order"
                 >
                     Objednať
                 </v-btn>
-                <v-btn text>
-                    Zatvoriť
+                <v-btn
+                    @click="e6 = 3"
+                >
+                    Krok späť
                 </v-btn>
             </v-stepper-content>
         </v-stepper>
@@ -173,19 +179,36 @@
             errors: {},
             checkbox1: false,
             checkbox2: false,
-
+            success_order: false,
         }),
 
         methods: {
-            /* doContinue() {
-                if(this.fields.fName == 0 || this.fields.lName == 0 || this.fields.email == 0 || this.fields.phone == 0 ){
-                    return this.errors = 'Vyplňte všetky polia.'
-                }
-            } */
+
+            order(){
+                let data = new FormData();
+                data.append('fName', this.fields.fName);
+                data.append('lName', this.fields.lName);
+                data.append('email', this.fields.email); //foreach pri selecte
+                data.append('phone', this.fields.phone);
+                data.append('service_id', this.service.id);
+
+                axios.post('/order', data).then(response => {
+                    this.success_order = true;
+                    location.href = '/home';
+                    console.log(response.data);
+                    //console.log(this.fields.photos);
+                }).catch(errors => {
+                    this.errors = errors.response.data.errors
+                })
+            }
         },
 
         created() {
             
+        },
+
+        props: {
+            service: {}
         }
     }
 </script>
