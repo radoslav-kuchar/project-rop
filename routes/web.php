@@ -26,13 +26,13 @@ Route::get('/order/create/{service}', 'OrderController@create');
 Route::post('/order', 'OrderController@store');
 Route::get('/order/{order}', 'OrderController@show');
 Route::get('/order/verify/{order}/{token}', 'OrderController@verify');
-Route::get('/service/user/{user}', 'ServiceController@indexByUser');
 Route::post('/review', 'ReviewController@store')->name('review.store');
 Route::get('/services', 'ServiceController@index')->name('services.index');
 Route::get('/service/create', 'ServiceController@create')->middleware('auth');
 Route::post('/service', 'ServiceController@store');
 Route::get('/service/{service}', 'ServiceController@show');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/panel', 'AdminController@getAdminPanel');
 
 Route::resource('articles', ArticleController::class)->only(['show', 'index', 'create', 'store']);
 
@@ -41,3 +41,6 @@ Route::get('/userinfo', function(){
         return Auth::user();
     } 
 });
+
+
+

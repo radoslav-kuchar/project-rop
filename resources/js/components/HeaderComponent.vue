@@ -29,6 +29,15 @@
                     </v-list-item-content>
                 </v-list-item>
 
+                <v-list-item link @click="blogCreate">
+                    <v-list-item-action>
+                        <v-icon>mdi-playlist-edit</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Vytvoriť článok</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+
                 <v-list-item link @click="blog">
                     <v-list-item-action>
                         <v-icon>mdi-alpha-b-box-outline</v-icon>
@@ -149,6 +158,10 @@
 
             blog() {
                 location.href = '/articles';
+            },
+
+            blogCreate() {
+                location.href = '/articles/create';
             },
 
             login() {

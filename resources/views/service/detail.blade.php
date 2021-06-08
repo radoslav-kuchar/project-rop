@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>iMake</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -24,7 +24,7 @@
 
     <div id="app"> 
         <header-component></header-component>
-        <service_detail :service='@json($serviceArray)' :photos='@json($service_photos)' :reviews='@json($reviews)'></service_detail>
+        <service_detail :service='@json($service)' :reviews='@json($reviews)'></service_detail>
     </div>
 
     
