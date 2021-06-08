@@ -29,10 +29,8 @@ class ServiceController extends Controller
             $service->user_name = User::find($service->user_id)->name;
         }
 
-
         return view('service.index', compact('services'));
     }
-
 
     public function create(User $user, Service $service)
     {
