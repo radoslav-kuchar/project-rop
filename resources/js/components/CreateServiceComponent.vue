@@ -10,7 +10,7 @@
                                     <v-row>
                                         <v-col cols="12" >
                                             <v-card-text class="mt-12">
-                                                <h1 class="text-center display-2 yellow--text text--accent-4">Vytvorenie služby</h1>                                            
+                                                <h1 class="text-center display-2 yellow--text text--accent-4">Vytvorenie služby</h1>
                                                 <h4 class="text-center mlt-4 subtitle-1">Vyplňte podrobné údaje o vašej službe.</h4>
                                                 <v-form @submit.prevent="submit">
                                                     <v-text-field
@@ -36,7 +36,16 @@
                                                     hide-details="auto"
                                                     v-model="fields.description"
                                                     class="mb-5"
-                                                    ></v-textarea>  
+                                                    ></v-textarea>
+                                                    <v-select
+                                                      :items="service_types"
+                                                      item-text="name"
+                                                      item-value="id"
+                                                      class="mb-5"
+                                                      v-model="fields.service_type"
+                                                      label="Spôsob doručenia"
+                                                      name="Spôsob doručenia"
+                                                    ></v-select>
                                                     <v-text-field
                                                     label="Cena služby"
                                                     name="Cena"
@@ -75,16 +84,16 @@
                                                         label="Pridajte fotografie"
                                                         multiple
                                                         prepend-icon="mdi-camera"
-                                                        id="photos"  
-                                                        v-model="fields.photos"                                                  
+                                                        id="photos"
+                                                        v-model="fields.photos"
                                                     ></v-file-input>
                                                 </v-form>
-                                                
+
                                             </v-card-text>
-                                            <div class="text-center mt-3 pb-5">                                                
+                                            <div class="text-center mt-3 pb-5">
                                                 <v-btn type="submit" rounded color="yellow accent-4" class="black--text" dark form="check-login-form" @click="doService">Vytvoriť</v-btn>
                                             </div>
-                                        </v-col>   
+                                        </v-col>
                                     </v-row>
                                 </v-window-item>
                             </v-window>
@@ -106,8 +115,9 @@ export default {
         },
 
         places: {
-            
+
         },
+        service_types: {},
         rules: {
             required: value => !!value || 'Povinné.',
 
@@ -115,13 +125,13 @@ export default {
 
             //lengthPassword: value => (value && value.length >= 8) || 'Minimálny počet znakov je 8',
 
-            
+
         },
         fields: {},
         success: false,
         errors: {},
 
-        
+
     }),
 
     methods: {
@@ -132,12 +142,14 @@ export default {
             data.append('city_id', this.fields.city); //foreach pri selecte
             data.append('category_id', this.fields.category);
             data.append('price', this.fields.price);
+            console.log(this.fields.service_type);
+            data.append('service_type_id', this.fields.service_type);
 
             var totalfiles = document.getElementById('photos').files.length;
             for (var index = 0; index < totalfiles; index++) {
                 data.append("photos[]", document.getElementById('photos').files[index]);
             }
-            
+
 
             axios.post('/service', data).then(response => {
                 location.href = '/home';
@@ -147,12 +159,13 @@ export default {
                 this.errors = errors.response.data.errors
             })
         }
-        
+
     },
 
     created(){
         this.places = this.cities
         this.cats = this.categories
+        this.service_types = service_types
         console.log(this.cats)
     },
 
@@ -160,7 +173,8 @@ export default {
         source: String,
         cities: {},
         categories: {},
+        service_types: {},
     }
-    
+
 };
 </script>

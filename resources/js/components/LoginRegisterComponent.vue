@@ -10,7 +10,7 @@
                                     <v-row>
                                         <v-col cols="12" md="8">
                                             <v-card-text class="mt-12">
-                                                <h1 class="text-center display-2 yellow--text text--accent-4">Prihlásenie</h1>                                            
+                                                <h1 class="text-center display-2 yellow--text text--accent-4">Prihlásenie</h1>
                                                 <h4 class="text-center mlt-4 subtitle-1">Pre prihlásenie zadajte správne údaje</h4>
                                                 <v-form @submit.prevent="submit" id="check-login-form">
                                                     <v-text-field
@@ -35,12 +35,12 @@
                                                     :error-messages="errorsl.password"
                                                     hide-details="auto"
                                                     v-model="fieldsl.password"
-                                                    ></v-text-field>  
+                                                    ></v-text-field>
                                                 </v-form>
-                                                
+
                                             </v-card-text>
                                             <h3 class="text-center mt-3 subtitle-1"><a href="#" style="text-decoration:none;color:black;">Zabudli ste heslo?</a></h3>
-                                            <div class="text-center mt-3 pb-5">                                                
+                                            <div class="text-center mt-3 pb-5">
                                                 <v-btn type="submit" rounded color="yellow accent-4" class="black--text" dark form="check-login-form" @click="doLogin">Prihlásiť sa</v-btn>
                                             </div>
                                         </v-col>
@@ -54,7 +54,7 @@
                                                 <v-btn rounded outlined dark @click="step++" class="black--text">Registrácia</v-btn>
                                             </div>
                                         </v-col>
-                                        
+
                                     </v-row>
                                 </v-window-item>
                                 <v-window-item :value="2">
@@ -70,7 +70,7 @@
                                         </v-col>
                                         <v-col cols="12" md="8">
                                             <v-card-text class="mt-12">
-                                                
+
                                                 <h1 class="text-center display-2 yellow--text text--accent-4">Registrácia</h1>
                                                 <h4 class="text-center mlt-4 subtitle-1">Pre registráciu vyplňte osobné údaje</h4>
                                                 <v-alert type="success" v-show="success_register" timeout="-1">Vaša registrácia prebehla úspešne!</v-alert>
@@ -107,9 +107,9 @@
                                                     :error-messages="errorsr.password"
                                                     hide-details="auto"
                                                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                                    @click:append="show1 = !show1"                                                    
+                                                    @click:append="show1 = !show1"
                                                     v-model="fieldsr.password"
-                                                    ></v-text-field>  
+                                                    ></v-text-field>
                                                     <v-text-field
                                                     label="Zopakuj heslo"
                                                     name="Re-Password"
@@ -120,9 +120,9 @@
                                                     :error-messages="errorsr.rePassword"
                                                     hide-details="auto"
                                                     :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                                                    @click:append="show2 = !show2"                                                    
+                                                    @click:append="show2 = !show2"
                                                     v-model="fieldsr.rePassword"
-                                                    ></v-text-field>  
+                                                    ></v-text-field>
                                                 </v-form>
                                             </v-card-text>
                                             <h3 class="text-center mt-3 subtitle-1"><a href="#" style="text-decoration:none;color:black;">Zabudli ste heslo?</a></h3>
@@ -152,7 +152,7 @@ export default {
         show2: false,
         rules: {
             required: value => !!value || 'Povinné.',
-        
+
             email: value => {
                 const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 return pattern.test(value) || 'Neplatný e-mail.'
@@ -161,22 +161,22 @@ export default {
             length: value => (value && value.length >= 3) || 'Minimálne 3 znaky',
 
             lengthPassword: value => (value && value.length >= 8) || 'Minimálny počet znakov je 8',
-  
+
         },
         fieldsr: {},
-        fieldsl: { 
+        fieldsl: {
             email: '',
             password: '',
             device_name: 'browser'
         },
         success: false,
-        error: false,    
+        error: false,
         success_register: false,
         errorsl: {},
         errorsr: {},
-        
 
-        
+
+
     }),
 
     computed: {
@@ -194,7 +194,7 @@ export default {
             }).catch( errors => {
                 this.errorsl = errors.response.data.errors
                 this.success = false
-            }) 
+            })
         },
         doRegister() {
             axios.post("api/register", this.fieldsr).then( response => {
@@ -205,13 +205,13 @@ export default {
             }).catch( errors => {
                 this.errorsr = errors.response.data.errors
                 this.success_register = false
-            }) 
+            })
         }
     },
 
     props: {
         source: String
     }
-    
+
 };
 </script>

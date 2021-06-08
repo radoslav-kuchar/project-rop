@@ -20,24 +20,24 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @laravelPWA
 
-    
+
 </head>
 <body>
 
     <style>
         .v-application .primary--text {
-            color: #ffa726 !important;  
-            caret-color: #ffa726 !important;  
+            color: #ffa726 !important;
+            caret-color: #ffa726 !important;
         }
         .v-list .v-list-item--active .v-list-item__title {
-        color: #ffa726 !important;  
+        color: #ffa726 !important;
         }
     </style>
 
-    <div id="app"> 
-        <create_service :cities='@json($cities)' :categories='@json($categories)'></create_service>
+    <div id="app">
+        <create_service :cities='@json($cities)' :categories='@json($categories)' :service_types='@json($service_types)'></create_service>
     </div>
 
-    
+
 </body>
 </html>

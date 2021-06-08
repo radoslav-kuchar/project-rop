@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "milon/barcode": "^8.0",
+        "rinvex/laravel-bookings": "^5.0",
         "silviolleite/laravelpwa": "^2.0"
     },
     "require-dev": {

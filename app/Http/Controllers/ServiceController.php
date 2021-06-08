@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ServiceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Service;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 class ServiceController extends Controller
 {
     public function index(Request $request)
-    {   
+    {
         $services = Service::paginate(1);
 
         foreach($services as $service) {
@@ -34,7 +35,8 @@ class ServiceController extends Controller
     {
         $categories = ServiceCategory::all();
         $cities = City::all();
-        return view('service.create', compact('user', 'service', 'categories', 'cities'));
+        $service_types = ServiceType::all();
+        return view('service.create', compact('user', 'service', 'categories', 'cities', 'service_types'));
     }
 
     public function store(Request $request)
@@ -42,7 +44,8 @@ class ServiceController extends Controller
         $data = request()->validate([
             'name' => 'required',
             'description' => 'required',
-            'price' => 'required|integer ',
+            'price' => 'required|integer',
+            'service_type_id' => 'required|integer',
             'category_id' => 'required',
             'city_id' => 'required',
         ]);
@@ -51,9 +54,11 @@ class ServiceController extends Controller
             'name' => $data['name'],
             'description' => $data['description'],
             'price' => $data['price'],
+            'service_type_id' => $data['service_type_id'],
             'category_id' => $data['category_id'],
             'city_id' => $data['city_id'],
         ]);
+
         if(isset($request->photos)){
             foreach($request->photos as $photo)
             {
@@ -83,7 +88,7 @@ class ServiceController extends Controller
         $service->path = $service->getPhotos();
         $service->category_name = ServiceCategory::find($service['category_id'])->name;
         $reviews = Review::where('service_id', $service->id)->get();
-   
+
         return view('service.detail', compact('service', 'reviews'));
     }
 }
